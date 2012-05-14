@@ -1,0 +1,426 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		B13CAB991560D74400E2E7FF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B13CAB981560D74400E2E7FF /* UIKit.framework */; };
+		B13CAB9B1560D74400E2E7FF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B13CAB9A1560D74400E2E7FF /* Foundation.framework */; };
+		B13CAB9D1560D74400E2E7FF /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B13CAB9C1560D74400E2E7FF /* CoreGraphics.framework */; };
+		B13CABA31560D74400E2E7FF /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B13CABA11560D74400E2E7FF /* InfoPlist.strings */; };
+		B13CABA51560D74400E2E7FF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B13CABA41560D74400E2E7FF /* main.m */; };
+		B13CABA91560D74400E2E7FF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B13CABA81560D74400E2E7FF /* AppDelegate.m */; };
+		B13CABB11560D74400E2E7FF /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B13CABB01560D74400E2E7FF /* SenTestingKit.framework */; };
+		B13CABB21560D74400E2E7FF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B13CAB981560D74400E2E7FF /* UIKit.framework */; };
+		B13CABB31560D74400E2E7FF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B13CAB9A1560D74400E2E7FF /* Foundation.framework */; };
+		B13CABBB1560D74400E2E7FF /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B13CABB91560D74400E2E7FF /* InfoPlist.strings */; };
+		B13CABBE1560D74400E2E7FF /* StocktakrTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B13CABBD1560D74400E2E7FF /* StocktakrTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		B13CABB41560D74400E2E7FF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B13CAB8B1560D74400E2E7FF /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B13CAB931560D74400E2E7FF;
+			remoteInfo = Stocktakr;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		B13CAB941560D74400E2E7FF /* Stocktakr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Stocktakr.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B13CAB981560D74400E2E7FF /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		B13CAB9A1560D74400E2E7FF /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		B13CAB9C1560D74400E2E7FF /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		B13CABA01560D74400E2E7FF /* Stocktakr-Info.plist */ = {isa = PBXFileReference; path = "Stocktakr-Info.plist"; sourceTree = "<group>"; };
+		B13CABA21560D74400E2E7FF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		B13CABA41560D74400E2E7FF /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		B13CABA61560D74400E2E7FF /* Stocktakr-Prefix.pch */ = {isa = PBXFileReference; path = "Stocktakr-Prefix.pch"; sourceTree = "<group>"; };
+		B13CABA71560D74400E2E7FF /* AppDelegate.h */ = {isa = PBXFileReference; path = AppDelegate.h; sourceTree = "<group>"; };
+		B13CABA81560D74400E2E7FF /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		B13CABAF1560D74400E2E7FF /* StocktakrTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StocktakrTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		B13CABB01560D74400E2E7FF /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		B13CABB81560D74400E2E7FF /* StocktakrTests-Info.plist */ = {isa = PBXFileReference; path = "StocktakrTests-Info.plist"; sourceTree = "<group>"; };
+		B13CABBA1560D74400E2E7FF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		B13CABBC1560D74400E2E7FF /* StocktakrTests.h */ = {isa = PBXFileReference; path = StocktakrTests.h; sourceTree = "<group>"; };
+		B13CABBD1560D74400E2E7FF /* StocktakrTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StocktakrTests.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		B13CAB911560D74400E2E7FF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B13CAB991560D74400E2E7FF /* UIKit.framework in Frameworks */,
+				B13CAB9B1560D74400E2E7FF /* Foundation.framework in Frameworks */,
+				B13CAB9D1560D74400E2E7FF /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B13CABAB1560D74400E2E7FF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B13CABB11560D74400E2E7FF /* SenTestingKit.framework in Frameworks */,
+				B13CABB21560D74400E2E7FF /* UIKit.framework in Frameworks */,
+				B13CABB31560D74400E2E7FF /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		B13CAB891560D74400E2E7FF = {
+			isa = PBXGroup;
+			children = (
+				B13CAB9E1560D74400E2E7FF /* Stocktakr */,
+				B13CABB61560D74400E2E7FF /* StocktakrTests */,
+				B13CAB971560D74400E2E7FF /* Frameworks */,
+				B13CAB951560D74400E2E7FF /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		B13CAB951560D74400E2E7FF /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B13CAB941560D74400E2E7FF /* Stocktakr.app */,
+				B13CABAF1560D74400E2E7FF /* StocktakrTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		B13CAB971560D74400E2E7FF /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B13CAB981560D74400E2E7FF /* UIKit.framework */,
+				B13CAB9A1560D74400E2E7FF /* Foundation.framework */,
+				B13CAB9C1560D74400E2E7FF /* CoreGraphics.framework */,
+				B13CABB01560D74400E2E7FF /* SenTestingKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		B13CAB9E1560D74400E2E7FF /* Stocktakr */ = {
+			isa = PBXGroup;
+			children = (
+				B13CABA71560D74400E2E7FF /* AppDelegate.h */,
+				B13CABA81560D74400E2E7FF /* AppDelegate.m */,
+				B13CAB9F1560D74400E2E7FF /* Supporting Files */,
+			);
+			path = Stocktakr;
+			sourceTree = "<group>";
+		};
+		B13CAB9F1560D74400E2E7FF /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				B13CABA01560D74400E2E7FF /* Stocktakr-Info.plist */,
+				B13CABA11560D74400E2E7FF /* InfoPlist.strings */,
+				B13CABA41560D74400E2E7FF /* main.m */,
+				B13CABA61560D74400E2E7FF /* Stocktakr-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		B13CABB61560D74400E2E7FF /* StocktakrTests */ = {
+			isa = PBXGroup;
+			children = (
+				B13CABBC1560D74400E2E7FF /* StocktakrTests.h */,
+				B13CABBD1560D74400E2E7FF /* StocktakrTests.m */,
+				B13CABB71560D74400E2E7FF /* Supporting Files */,
+			);
+			path = StocktakrTests;
+			sourceTree = "<group>";
+		};
+		B13CABB71560D74400E2E7FF /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				B13CABB81560D74400E2E7FF /* StocktakrTests-Info.plist */,
+				B13CABB91560D74400E2E7FF /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		B13CAB931560D74400E2E7FF /* Stocktakr */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B13CABC11560D74400E2E7FF /* Build configuration list for PBXNativeTarget "Stocktakr" */;
+			buildPhases = (
+				B13CAB901560D74400E2E7FF /* Sources */,
+				B13CAB911560D74400E2E7FF /* Frameworks */,
+				B13CAB921560D74400E2E7FF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Stocktakr;
+			productName = Stocktakr;
+			productReference = B13CAB941560D74400E2E7FF /* Stocktakr.app */;
+			productType = "com.apple.product-type.application";
+		};
+		B13CABAE1560D74400E2E7FF /* StocktakrTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B13CABC41560D74400E2E7FF /* Build configuration list for PBXNativeTarget "StocktakrTests" */;
+			buildPhases = (
+				B13CABAA1560D74400E2E7FF /* Sources */,
+				B13CABAB1560D74400E2E7FF /* Frameworks */,
+				B13CABAC1560D74400E2E7FF /* Resources */,
+				B13CABAD1560D74400E2E7FF /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B13CABB51560D74400E2E7FF /* PBXTargetDependency */,
+			);
+			name = StocktakrTests;
+			productName = StocktakrTests;
+			productReference = B13CABAF1560D74400E2E7FF /* StocktakrTests.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		B13CAB8B1560D74400E2E7FF /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0430;
+			};
+			buildConfigurationList = B13CAB8E1560D74400E2E7FF /* Build configuration list for PBXProject "Stocktakr" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = B13CAB891560D74400E2E7FF;
+			productRefGroup = B13CAB951560D74400E2E7FF /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				B13CAB931560D74400E2E7FF /* Stocktakr */,
+				B13CABAE1560D74400E2E7FF /* StocktakrTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		B13CAB921560D74400E2E7FF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B13CABA31560D74400E2E7FF /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B13CABAC1560D74400E2E7FF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B13CABBB1560D74400E2E7FF /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		B13CABAD1560D74400E2E7FF /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		B13CAB901560D74400E2E7FF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B13CABA51560D74400E2E7FF /* main.m in Sources */,
+				B13CABA91560D74400E2E7FF /* AppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B13CABAA1560D74400E2E7FF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B13CABBE1560D74400E2E7FF /* StocktakrTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		B13CABB51560D74400E2E7FF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B13CAB931560D74400E2E7FF /* Stocktakr */;
+			targetProxy = B13CABB41560D74400E2E7FF /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		B13CABA11560D74400E2E7FF /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B13CABA21560D74400E2E7FF /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		B13CABB91560D74400E2E7FF /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B13CABBA1560D74400E2E7FF /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		B13CABBF1560D74400E2E7FF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		B13CABC01560D74400E2E7FF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		B13CABC21560D74400E2E7FF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Stocktakr/Stocktakr-Prefix.pch";
+				INFOPLIST_FILE = "Stocktakr/Stocktakr-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		B13CABC31560D74400E2E7FF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Stocktakr/Stocktakr-Prefix.pch";
+				INFOPLIST_FILE = "Stocktakr/Stocktakr-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		B13CABC51560D74400E2E7FF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Stocktakr.app/Stocktakr";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Stocktakr/Stocktakr-Prefix.pch";
+				INFOPLIST_FILE = "StocktakrTests/StocktakrTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		B13CABC61560D74400E2E7FF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Stocktakr.app/Stocktakr";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Stocktakr/Stocktakr-Prefix.pch";
+				INFOPLIST_FILE = "StocktakrTests/StocktakrTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		B13CAB8E1560D74400E2E7FF /* Build configuration list for PBXProject "Stocktakr" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B13CABBF1560D74400E2E7FF /* Debug */,
+				B13CABC01560D74400E2E7FF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B13CABC11560D74400E2E7FF /* Build configuration list for PBXNativeTarget "Stocktakr" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B13CABC21560D74400E2E7FF /* Debug */,
+				B13CABC31560D74400E2E7FF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		B13CABC41560D74400E2E7FF /* Build configuration list for PBXNativeTarget "StocktakrTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B13CABC51560D74400E2E7FF /* Debug */,
+				B13CABC61560D74400E2E7FF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = B13CAB8B1560D74400E2E7FF /* Project object */;
+}
