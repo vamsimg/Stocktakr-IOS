@@ -71,6 +71,8 @@
 			
 			dispatch_after(dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC), dispatch_get_main_queue(), ^(void){
 				[MBProgressHUD hideHUDForView:self.navigationController.view animated:NO];
+				
+				self.recordCountLabel.text = [NSString stringWithFormat:@"%d", [[ProductManager sharedManager] numberOfRecords]];
 			});
 		} else {
 			[MBProgressHUD hideHUDForView:self.navigationController.view animated:NO];
