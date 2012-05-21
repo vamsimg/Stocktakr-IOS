@@ -1,0 +1,15 @@
+[submodule "lib/fmdb"]
+	path = lib/fmdb
+	url = https://github.com/ccgus/fmdb.git
+[submodule "lib/AFNetworking"]
+	path = lib/AFNetworking
+	url = https://github.com/AFNetworking/AFNetworking.git
+[submodule "lib/MBProgressHUD"]
+	path = lib/MBProgressHUD
+	url = https://github.com/matej/MBProgressHUD.git
+[submodule "lib/TouchJSON"]
+	path = lib/TouchJSON
+	url = https://github.com/TouchCode/TouchJSON.git
+[submodule "lib/SSZipArchive"]
+	path = lib/SSZipArchive
+	url = https://github.com/samsoffes/ssziparchive.git
