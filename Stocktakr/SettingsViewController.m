@@ -23,6 +23,7 @@
 
 @synthesize storeIdField = storeIdField_;
 @synthesize passwordField = passwordField_;
+@synthesize nameField = nameField_;
 @synthesize setQuantitySwitch = setQuantitySwitch_;
 
 
@@ -38,11 +39,10 @@
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
 	
-	[self.storeIdField becomeFirstResponder];
-
 	NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
 	self.storeIdField.text = [userDefaults stringForKey:STORE_ID_KEY];
 	self.passwordField.text = [userDefaults stringForKey:PASSWORD_KEY];
+	self.nameField.text = [userDefaults stringForKey:NAME_KEY];
 	self.setQuantitySwitch.on = [userDefaults boolForKey:SET_QUANTITY_KEY];
 }
 
@@ -67,8 +67,11 @@
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
 	if (textField == self.storeIdField) {
 		[self.passwordField becomeFirstResponder];
-	} else {
+	} else if (textField == self.passwordField) {
 		[self testConnectionWithStoreId:self.storeIdField.text password:self.passwordField.text];
+	} else {
+		[[NSUserDefaults standardUserDefaults] setValue:textField.text forKey:NAME_KEY];
+		[textField resignFirstResponder];
 	}
 	
 	return YES;

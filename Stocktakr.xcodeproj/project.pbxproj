@@ -20,8 +20,6 @@
 		B13CABBE1560D74400E2E7FF /* StocktakrTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B13CABBD1560D74400E2E7FF /* StocktakrTests.m */; };
 		B13CABCA1560D7BA00E2E7FF /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B13CABC81560D7BA00E2E7FF /* HomeViewController.m */; };
 		B13CABCB1560D7BA00E2E7FF /* HomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B13CABC91560D7BA00E2E7FF /* HomeViewController.xib */; };
-		B143761715648ACD005034F6 /* SubmitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B143761515648ACC005034F6 /* SubmitViewController.m */; };
-		B143761815648ACD005034F6 /* SubmitViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B143761615648ACC005034F6 /* SubmitViewController.xib */; };
 		B143761B15656F1F005034F6 /* NSString+URLEncoding.m in Sources */ = {isa = PBXBuildFile; fileRef = B143761A15656F1F005034F6 /* NSString+URLEncoding.m */; };
 		B175862C1560DE6A00C32A09 /* Settings.png in Resources */ = {isa = PBXBuildFile; fileRef = B175862B1560DE6A00C32A09 /* Settings.png */; };
 		B17586301560E09500C32A09 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B175862E1560E09500C32A09 /* SettingsViewController.m */; };
@@ -118,9 +116,6 @@
 		B13CABC71560D7BA00E2E7FF /* HomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
 		B13CABC81560D7BA00E2E7FF /* HomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
 		B13CABC91560D7BA00E2E7FF /* HomeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HomeViewController.xib; sourceTree = "<group>"; };
-		B143761415648ACC005034F6 /* SubmitViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubmitViewController.h; sourceTree = "<group>"; };
-		B143761515648ACC005034F6 /* SubmitViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubmitViewController.m; sourceTree = "<group>"; };
-		B143761615648ACC005034F6 /* SubmitViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SubmitViewController.xib; sourceTree = "<group>"; };
 		B143761915656F1F005034F6 /* NSString+URLEncoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+URLEncoding.h"; sourceTree = "<group>"; };
 		B143761A15656F1F005034F6 /* NSString+URLEncoding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+URLEncoding.m"; sourceTree = "<group>"; };
 		B175862B1560DE6A00C32A09 /* Settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Settings.png; sourceTree = "<group>"; };
@@ -292,9 +287,6 @@
 				B1906FAB1563C0B400FE10D3 /* ScanViewController.h */,
 				B1906FAC1563C0B400FE10D3 /* ScanViewController.m */,
 				B1906FAD1563C0B400FE10D3 /* ScanViewController.xib */,
-				B143761415648ACC005034F6 /* SubmitViewController.h */,
-				B143761515648ACC005034F6 /* SubmitViewController.m */,
-				B143761615648ACC005034F6 /* SubmitViewController.xib */,
 				B13CAB9F1560D74400E2E7FF /* Supporting Files */,
 			);
 			path = Stocktakr;
@@ -591,7 +583,6 @@
 				B1906F0815622BB900FE10D3 /* StocktakeViewController.xib in Resources */,
 				B1906FA71563B36A00FE10D3 /* RecordsViewController.xib in Resources */,
 				B1906FAF1563C0B500FE10D3 /* ScanViewController.xib in Resources */,
-				B143761815648ACD005034F6 /* SubmitViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -662,7 +653,6 @@
 				B1906F9B15635D2400FE10D3 /* zip.c in Sources */,
 				B1906FA61563B36A00FE10D3 /* RecordsViewController.m in Sources */,
 				B1906FAE1563C0B500FE10D3 /* ScanViewController.m in Sources */,
-				B143761715648ACD005034F6 /* SubmitViewController.m in Sources */,
 				B143761B15656F1F005034F6 /* NSString+URLEncoding.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

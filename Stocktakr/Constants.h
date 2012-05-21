@@ -11,6 +11,7 @@
 
 #define STORE_ID_KEY @"StoreId"
 #define PASSWORD_KEY @"Password"
+#define NAME_KEY @"Name"
 #define SET_QUANTITY_KEY @"SetQuantity"
 
 #endif

@@ -12,6 +12,7 @@
 
 @property (nonatomic, strong) IBOutlet UITextField *storeIdField;
 @property (nonatomic, strong) IBOutlet UITextField *passwordField;
+@property (nonatomic, strong) IBOutlet UITextField *nameField;
 
 @property (nonatomic, strong) IBOutlet UISwitch *setQuantitySwitch;
 

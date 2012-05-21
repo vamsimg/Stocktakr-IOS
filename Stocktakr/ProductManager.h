@@ -14,7 +14,7 @@
 
 - (void)loadProductListWithStoreId:(NSString *)storeId password:(NSString *)password complete:(void (^)(BOOL success))complete progress:(void (^)(double progress))progress;
 - (void)validateCredentialsWithStoreId:(NSString *)storeId password:(NSString *)password complete:(void (^)(BOOL success))complete;
-- (void)uploadStocktakeRecordsWithStoreId:(NSString *)storeId password:(NSString *)password person:(NSString *)person complete:(void (^)(BOOL success))complete;
+- (void)uploadStocktakeRecordsWithStoreId:(NSString *)storeId password:(NSString *)password name:(NSString *)name complete:(void (^)(BOOL success))complete;
 
 - (NSInteger)numberOfProducts;
 - (NSInteger)numberOfRecords;

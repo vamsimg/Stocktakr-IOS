@@ -123,9 +123,9 @@ static NSString *const ZippedStocktakeTransactionsPath = @"MobileItemHandler/Zip
 	[operation start];
 }
 
-- (void)uploadStocktakeRecordsWithStoreId:(NSString *)storeId password:(NSString *)password person:(NSString *)person complete:(void (^)(BOOL))complete {
+- (void)uploadStocktakeRecordsWithStoreId:(NSString *)storeId password:(NSString *)password name:(NSString *)name complete:(void (^)(BOOL))complete {
 	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/%@/%@/%@/%@", HostName, ZippedStocktakeTransactionsPath, storeId, password, [self clientType], [person urlEncode]]];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/%@/%@/%@/%@", HostName, ZippedStocktakeTransactionsPath, storeId, password, [self clientType], [name urlEncode]]];
 		NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
 		[request addValue:@"application/json " forHTTPHeaderField:@"Content-type"];
 		[request setHTTPMethod:@"POST"];

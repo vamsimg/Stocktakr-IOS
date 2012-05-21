@@ -10,7 +10,8 @@
 #import "ProductManager.h"
 #import "ScanViewController.h"
 #import "RecordsViewController.h"
-#import "SubmitViewController.h"
+#import "Constants.h"
+#import "MBProgressHUD.h"
 
 
 @interface StocktakeViewController ()
@@ -57,8 +58,26 @@
 }
 
 - (IBAction)submitRecords:(UIButton *)button {
-	SubmitViewController *viewController = [[SubmitViewController alloc] initWithNibName:nil bundle:nil];
-	[self.navigationController pushViewController:viewController animated:YES];
+	NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+	NSString *storeId = [userDefaults valueForKey:STORE_ID_KEY];
+	NSString *password = [userDefaults valueForKey:PASSWORD_KEY];
+	NSString *name = [userDefaults valueForKey:NAME_KEY];
+	
+	MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+	hud.labelText = @"Submitting";
+	[[ProductManager sharedManager] uploadStocktakeRecordsWithStoreId:storeId password:password name:name complete:^(BOOL success) {
+		if (success) {
+			hud.labelText = @"Successful";
+			
+			dispatch_after(dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC), dispatch_get_main_queue(), ^(void){
+				[MBProgressHUD hideHUDForView:self.navigationController.view animated:NO];
+			});
+		} else {
+			[MBProgressHUD hideHUDForView:self.navigationController.view animated:NO];
+			
+			[[[UIAlertView alloc] initWithTitle:@"Error Submitting" message:@"An error occurred while submitting records" delegate:nil cancelButtonTitle:@"Close" otherButtonTitles:nil] show];
+		}
+	}];
 }
 
 @end
