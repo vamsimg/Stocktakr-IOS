@@ -14,7 +14,7 @@
 
 @interface SettingsViewController ()
 
-- (void)done:(UIBarButtonItem *)barButton;
+- (void)close:(UIBarButtonItem *)barButton;
 - (void)testConnectionWithStoreId:(NSString *)storeId password:(NSString *)password;
 
 @end
@@ -33,7 +33,7 @@
 	[super viewDidLoad];
 	
 	self.title = @"Settings";
-	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(done:)];
+	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Close" style:UIBarButtonItemStyleBordered target:self action:@selector(close:)];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -113,7 +113,7 @@
 	}];
 }
 
-- (void)done:(UIBarButtonItem *)barButton {
+- (void)close:(UIBarButtonItem *)barButton {
 	[self dismissModalViewControllerAnimated:YES];
 }
 
