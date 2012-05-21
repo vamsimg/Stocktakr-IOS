@@ -64,13 +64,19 @@
 
 #pragma mark - UITextFieldDelegate
 
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+	NSString *barcode = [textField.text stringByReplacingCharactersInRange:range withString:string];
+	[[NSUserDefaults standardUserDefaults] setValue:barcode forKey:NAME_KEY];
+	
+	return YES;
+}
+
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
 	if (textField == self.storeIdField) {
 		[self.passwordField becomeFirstResponder];
 	} else if (textField == self.passwordField) {
 		[self testConnectionWithStoreId:self.storeIdField.text password:self.passwordField.text];
 	} else {
-		[[NSUserDefaults standardUserDefaults] setValue:textField.text forKey:NAME_KEY];
 		[textField resignFirstResponder];
 	}
 	
