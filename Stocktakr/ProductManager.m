@@ -211,6 +211,8 @@ static NSString *const ZippedStocktakeTransactionsPath = @"MobileItemHandler/Zip
 		[product setValue:[rs stringForColumn:@"barcode"] forKey:@"barcode"];
 		[product setValue:[rs stringForColumn:@"description"] forKey:@"description"];
 		[product setValue:[rs stringForColumn:@"price"] forKey:@"price"];
+		
+		[rs close];
 	}];
 	
 	return product;
@@ -237,6 +239,7 @@ static NSString *const ZippedStocktakeTransactionsPath = @"MobileItemHandler/Zip
 			// No record exists, make a new one
 			[db executeUpdate:@"INSERT INTO quantities (code, quantity, last_modified) VALUES (?, ?, ?)", code, newQuantity, lastModified];
 		}
+		[rs close];
 	}];
 	
 	return newQuantity;
@@ -321,6 +324,7 @@ static NSString *const ZippedStocktakeTransactionsPath = @"MobileItemHandler/Zip
 			return;
 		}
 		code = [rs stringForColumn:@"code"];
+		[rs close];
 	}];
 	return code;
 }
