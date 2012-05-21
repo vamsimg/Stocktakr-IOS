@@ -63,6 +63,11 @@
 	NSString *password = [userDefaults valueForKey:PASSWORD_KEY];
 	NSString *name = [userDefaults valueForKey:NAME_KEY];
 	
+	if (![storeId length] || ![password length] || ![name length]) {
+		[[[UIAlertView alloc] initWithTitle:@"Details missing" message:@"Please fill in details in the settings screen to submit records" delegate:nil cancelButtonTitle:@"Close" otherButtonTitles:nil] show];
+		return;
+	}
+	
 	MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
 	hud.labelText = @"Submitting";
 	[[ProductManager sharedManager] uploadStocktakeRecordsWithStoreId:storeId password:password name:name complete:^(BOOL success) {
