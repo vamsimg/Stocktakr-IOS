@@ -27,6 +27,7 @@
 	[super viewDidLoad];
 	
 	self.title = @"Records";
+	self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -68,6 +69,17 @@
 	cell.detailTextLabel.text = [record objectForKey:@"barcode"];
 	
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+	if (editingStyle == UITableViewCellEditingStyleDelete) {
+		ProductManager *productManager = [ProductManager sharedManager];
+		NSDictionary *record = [self.records objectAtIndex:indexPath.row];
+		
+		[productManager deleteRecordForProduct:[record valueForKey:@"code"]];
+		self.records = [productManager records];
+		[self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+	}
 }
 
 
