@@ -25,5 +25,6 @@
 
 - (NSNumber *)incrementQuantityForBarcode:(NSString *)barcode;
 - (BOOL)setQuantity:(NSNumber *)quantity forBarcode:(NSString *)barcode;
+- (void)deleteRecordForProduct:(NSString *)productCode;
 
 @end

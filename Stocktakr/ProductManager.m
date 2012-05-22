@@ -265,6 +265,12 @@ static NSString *const ZippedStocktakeTransactionsPath = @"MobileItemHandler/Zip
 	return YES;
 }
 
+- (void)deleteRecordForProduct:(NSString *)productCode {
+	[self.databaseQueue inDatabase:^(FMDatabase *db) {
+		[db executeUpdate:@"DELETE FROM quantities WHERE code = ?", productCode];
+	}];
+}
+
 
 #pragma mark - Private methods
 
