@@ -251,8 +251,13 @@ static NSString *const ZippedStocktakeTransactionsPath = @"MobileItemHandler/Zip
 		return NO;
 	}
 	
-	NSString *lastModified = [[self dateFormatter] stringFromDate:[NSDate date]];
+	if ([quantity isEqualToNumber:[NSNumber numberWithInt:0]]) {
+		[self deleteRecordForProduct:code];
+		return YES;
+	}
 	
+	NSString *lastModified = [[self dateFormatter] stringFromDate:[NSDate date]];
+		
 	[self.databaseQueue inDatabase:^(FMDatabase *db) {
 		int numRecords = [db intForQuery:@"SELECT COUNT(*) FROM quantities WHERE code = ?", code];
 		if (numRecords) {
