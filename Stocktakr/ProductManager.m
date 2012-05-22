@@ -187,6 +187,7 @@ static NSString *const ZippedStocktakeTransactionsPath = @"MobileItemHandler/Zip
 		FMResultSet *rs = [db executeQuery:@"SELECT * FROM quantities, products WHERE quantities.code = products.code"];
 		while ([rs next]) {
 			NSMutableDictionary *record = [NSMutableDictionary dictionary];
+			[record setValue:[rs stringForColumn:@"code"] forKey:@"code"];
 			[record setValue:[rs stringForColumn:@"barcode"] forKey:@"barcode"];
 			[record setValue:[rs stringForColumn:@"description"] forKey:@"description"];
 			[record setValue:[NSNumber numberWithDouble:[rs doubleForColumn:@"quantity"]] forKey:@"quantity"];
