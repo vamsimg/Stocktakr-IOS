@@ -21,6 +21,8 @@
 		B13CABCA1560D7BA00E2E7FF /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B13CABC81560D7BA00E2E7FF /* HomeViewController.m */; };
 		B13CABCB1560D7BA00E2E7FF /* HomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B13CABC91560D7BA00E2E7FF /* HomeViewController.xib */; };
 		B143761B15656F1F005034F6 /* NSString+URLEncoding.m in Sources */ = {isa = PBXBuildFile; fileRef = B143761A15656F1F005034F6 /* NSString+URLEncoding.m */; };
+		B158FCFF156CB25C00EDE9D1 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B158FCFD156CB25B00EDE9D1 /* Icon@2x.png */; };
+		B158FD00156CB25C00EDE9D1 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = B158FCFE156CB25C00EDE9D1 /* Icon.png */; };
 		B175862C1560DE6A00C32A09 /* Settings.png in Resources */ = {isa = PBXBuildFile; fileRef = B175862B1560DE6A00C32A09 /* Settings.png */; };
 		B17586301560E09500C32A09 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B175862E1560E09500C32A09 /* SettingsViewController.m */; };
 		B17586311560E09500C32A09 /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B175862F1560E09500C32A09 /* SettingsViewController.xib */; };
@@ -118,6 +120,8 @@
 		B13CABC91560D7BA00E2E7FF /* HomeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HomeViewController.xib; sourceTree = "<group>"; };
 		B143761915656F1F005034F6 /* NSString+URLEncoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+URLEncoding.h"; sourceTree = "<group>"; };
 		B143761A15656F1F005034F6 /* NSString+URLEncoding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+URLEncoding.m"; sourceTree = "<group>"; };
+		B158FCFD156CB25B00EDE9D1 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
+		B158FCFE156CB25C00EDE9D1 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		B175862B1560DE6A00C32A09 /* Settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Settings.png; sourceTree = "<group>"; };
 		B175862D1560E09500C32A09 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
 		B175862E1560E09500C32A09 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
@@ -264,6 +268,8 @@
 			children = (
 				B1906F451562C35A00FE10D3 /* Categories */,
 				B175862B1560DE6A00C32A09 /* Settings.png */,
+				B158FCFD156CB25B00EDE9D1 /* Icon@2x.png */,
+				B158FCFE156CB25C00EDE9D1 /* Icon.png */,
 				B13CABA71560D74400E2E7FF /* AppDelegate.h */,
 				B13CABA81560D74400E2E7FF /* AppDelegate.m */,
 				B17586321560E35400C32A09 /* ProductManager.h */,
@@ -583,6 +589,8 @@
 				B1906F0815622BB900FE10D3 /* StocktakeViewController.xib in Resources */,
 				B1906FA71563B36A00FE10D3 /* RecordsViewController.xib in Resources */,
 				B1906FAF1563C0B500FE10D3 /* ScanViewController.xib in Resources */,
+				B158FCFF156CB25C00EDE9D1 /* Icon@2x.png in Resources */,
+				B158FD00156CB25C00EDE9D1 /* Icon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
