@@ -22,6 +22,8 @@
 		B13CABCB1560D7BA00E2E7FF /* HomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B13CABC91560D7BA00E2E7FF /* HomeViewController.xib */; };
 		B143761B15656F1F005034F6 /* NSString+URLEncoding.m in Sources */ = {isa = PBXBuildFile; fileRef = B143761A15656F1F005034F6 /* NSString+URLEncoding.m */; };
 		B158FCA0156A0B8F00EDE9D1 /* KeypadView.m in Sources */ = {isa = PBXBuildFile; fileRef = B158FC9F156A0B8F00EDE9D1 /* KeypadView.m */; };
+		B158FCEF156C88F600EDE9D1 /* QuantityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B158FCED156C88F600EDE9D1 /* QuantityViewController.m */; };
+		B158FCF0156C88F600EDE9D1 /* QuantityViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B158FCEE156C88F600EDE9D1 /* QuantityViewController.xib */; };
 		B158FCFF156CB25C00EDE9D1 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B158FCFD156CB25B00EDE9D1 /* Icon@2x.png */; };
 		B158FD00156CB25C00EDE9D1 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = B158FCFE156CB25C00EDE9D1 /* Icon.png */; };
 		B175862C1560DE6A00C32A09 /* Settings.png in Resources */ = {isa = PBXBuildFile; fileRef = B175862B1560DE6A00C32A09 /* Settings.png */; };
@@ -123,6 +125,9 @@
 		B143761A15656F1F005034F6 /* NSString+URLEncoding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+URLEncoding.m"; sourceTree = "<group>"; };
 		B158FC9E156A0B8F00EDE9D1 /* KeypadView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeypadView.h; sourceTree = "<group>"; };
 		B158FC9F156A0B8F00EDE9D1 /* KeypadView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeypadView.m; sourceTree = "<group>"; };
+		B158FCEC156C88F600EDE9D1 /* QuantityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuantityViewController.h; sourceTree = "<group>"; };
+		B158FCED156C88F600EDE9D1 /* QuantityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuantityViewController.m; sourceTree = "<group>"; };
+		B158FCEE156C88F600EDE9D1 /* QuantityViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QuantityViewController.xib; sourceTree = "<group>"; };
 		B158FCFD156CB25B00EDE9D1 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		B158FCFE156CB25C00EDE9D1 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		B175862B1560DE6A00C32A09 /* Settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Settings.png; sourceTree = "<group>"; };
@@ -298,6 +303,9 @@
 				B1906FAC1563C0B400FE10D3 /* ScanViewController.m */,
 				B1906FAD1563C0B400FE10D3 /* ScanViewController.xib */,
 				B13CAB9F1560D74400E2E7FF /* Supporting Files */,
+				B158FCEC156C88F600EDE9D1 /* QuantityViewController.h */,
+				B158FCED156C88F600EDE9D1 /* QuantityViewController.m */,
+				B158FCEE156C88F600EDE9D1 /* QuantityViewController.xib */,
 			);
 			path = Stocktakr;
 			sourceTree = "<group>";
@@ -602,6 +610,7 @@
 				B1906F0815622BB900FE10D3 /* StocktakeViewController.xib in Resources */,
 				B1906FA71563B36A00FE10D3 /* RecordsViewController.xib in Resources */,
 				B1906FAF1563C0B500FE10D3 /* ScanViewController.xib in Resources */,
+				B158FCF0156C88F600EDE9D1 /* QuantityViewController.xib in Resources */,
 				B158FCFF156CB25C00EDE9D1 /* Icon@2x.png in Resources */,
 				B158FD00156CB25C00EDE9D1 /* Icon.png in Resources */,
 			);
@@ -676,6 +685,7 @@
 				B1906FAE1563C0B500FE10D3 /* ScanViewController.m in Sources */,
 				B143761B15656F1F005034F6 /* NSString+URLEncoding.m in Sources */,
 				B158FCA0156A0B8F00EDE9D1 /* KeypadView.m in Sources */,
+				B158FCEF156C88F600EDE9D1 /* QuantityViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
