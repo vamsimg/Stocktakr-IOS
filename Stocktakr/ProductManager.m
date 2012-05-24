@@ -65,7 +65,7 @@ static NSString *const ZippedStocktakeTransactionsPath = @"MobileItemHandler/Zip
 - (id)init {
 	if (self = [super init]) {
 		NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
-		self.databaseQueue = [FMDatabaseQueue databaseQueueWithPath:[documentsDirectory stringByAppendingPathComponent:@"stocktakr.db"]];
+		self.databaseQueue = [FMDatabaseQueue databaseQueueWithPath:[documentsDirectory stringByAppendingPathComponent:@"stocktakr.sqlite"]];
 		[self.databaseQueue inDatabase:^(FMDatabase *db) {
 			[db executeUpdate:@"CREATE TABLE IF NOT EXISTS products(code STRING PRIMARY KEY, barcode STRING, description STRING, price STRING)"];
 			[db executeUpdate:@"CREATE TABLE IF NOT EXISTS quantities(code STRING PRIMARY KEY, quantity DOUBLE, last_modified STRING)"];
