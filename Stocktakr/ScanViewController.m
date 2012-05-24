@@ -8,6 +8,7 @@
 
 #import "ScanViewController.h"
 #import "ProductManager.h"
+#import "QuantityViewController.h"
 #import "Constants.h"
 
 
@@ -37,10 +38,11 @@
 	
 	[self.barcodeField becomeFirstResponder];
 	
-	if ([[NSUserDefaults standardUserDefaults] boolForKey:SET_QUANTITY_KEY]) {
-		self.quantityField.userInteractionEnabled = YES;
-	} else {
-		self.quantityField.userInteractionEnabled = NO;
+	self.quantityField.userInteractionEnabled = NO;
+	
+	// If there's a barcode in the label then we're returning from the quantity screen so we want to update the quantity to make sure it's correct
+	if ([self.barcodeLabel.text length]) {
+		self.quantityField.text = [[[ProductManager sharedManager] quantityForBarcode:self.barcodeLabel.text] stringValue];
 	}
 }
 
@@ -51,25 +53,14 @@
 
 #pragma mark - UITextFieldDelegate
 
-- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
-	if (textField == self.quantityField) {
-		NSString *newString = [textField.text stringByReplacingCharactersInRange:range withString:string];
-		NSRegularExpression *regEx = [NSRegularExpression regularExpressionWithPattern:@"^[0-9]+(\\.[0-9]*)?$" options:0 error:nil];
-		NSRange match = [regEx rangeOfFirstMatchInString:newString options:0 range:NSMakeRange(0, [newString length])];
-		if (match.location != 0) {
-			return NO;
-		}
-	}
-	
-	return YES;
-}
-
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
 	if (textField == self.barcodeField) {
 		NSString *barcode = textField.text;
 		textField.text = @"";
 		
-		NSDictionary *product = [[ProductManager sharedManager] productForBarcode:barcode];
+		ProductManager *productManager = [ProductManager sharedManager];
+		
+		NSDictionary *product = [productManager productForBarcode:barcode];
 		if (!product) {
 			[[[UIAlertView alloc] initWithTitle:@"Invalid barcode" message:@"Unable to find a product matching barcode" delegate:nil cancelButtonTitle:@"Close" otherButtonTitles:nil] show];
 			return YES;
@@ -80,9 +71,21 @@
 		self.priceLabel.text = [product valueForKey:@"price"];
 		
 		if ([[NSUserDefaults standardUserDefaults] boolForKey:SET_QUANTITY_KEY]) {
-			[self.quantityField becomeFirstResponder];
+			NSString *barcode = [product valueForKey:@"barcode"];
+			
+			NSNumber *quantity = [productManager quantityForBarcode:barcode];
+			if ([quantity isEqualToNumber:[NSNumber numberWithInt:0]]) {
+				// If this is the first entry then we'll initialize the quantity to 1
+				quantity = [productManager incrementQuantityForBarcode:barcode];
+			}
+			self.quantityField.text = [quantity stringValue];
+			
+			QuantityViewController *viewController = [[QuantityViewController alloc] initWithNibName:nil bundle:nil];
+			viewController.product = product;
+			viewController.initialQuantity = quantity;
+			[self.navigationController pushViewController:viewController animated:YES];
 		} else {
-			self.quantityField.text = [[[ProductManager sharedManager] incrementQuantityForBarcode:barcode] stringValue];
+			self.quantityField.text = [[productManager incrementQuantityForBarcode:barcode] stringValue];
 		}
 	} else {
 		NSNumber *quantity = [NSNumber numberWithDouble:[textField.text doubleValue]];
