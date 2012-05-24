@@ -7,7 +7,9 @@
 //
 
 #import "RecordsViewController.h"
+#import "QuantityViewController.h"
 #import "ProductManager.h"
+#import "RecordCell.h"
 
 
 @interface RecordsViewController ()
@@ -34,6 +36,7 @@
 	[super viewWillAppear:animated];
 	
 	self.records = [[ProductManager sharedManager] records];
+	[self.tableView reloadData];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
@@ -53,20 +56,18 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    RecordCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
 	if (!cell) {
-		cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
-		cell.accessoryView = [[UILabel alloc] init];
+		cell = [[RecordCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
 	}
 	
 	NSDictionary *record = [self.records objectAtIndex:indexPath.row];
 	
-	UILabel *quantityLabel = (UILabel *)cell.accessoryView;
-	quantityLabel.text = [[record valueForKey:@"quantity"] stringValue];
-	[quantityLabel sizeToFit];
-	
 	cell.textLabel.text = [record objectForKey:@"description"];
 	cell.detailTextLabel.text = [record objectForKey:@"barcode"];
+	
+	cell.quantityLabel.text = [[record valueForKey:@"quantity"] stringValue];
+	[cell.quantityLabel sizeToFit];
 	
     return cell;
 }
@@ -85,14 +86,13 @@
 
 #pragma mark - UITableViewDelegate
 
-- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
-	UILabel *quantityLabel = (UILabel *)[[self.tableView cellForRowAtIndexPath:indexPath] accessoryView];
-	quantityLabel.textColor = [UIColor blackColor];
-}
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-	UILabel *quantityLabel = (UILabel *)[[self.tableView cellForRowAtIndexPath:indexPath] accessoryView];
-	quantityLabel.textColor = [UIColor whiteColor];
+	NSDictionary *product = [self.records objectAtIndex:indexPath.row];
+	
+	QuantityViewController *viewController = [[QuantityViewController alloc] initWithNibName:nil bundle:nil];
+	viewController.product = product;
+	viewController.initialQuantity = [product valueForKey:@"quantity"];
+	[self.navigationController pushViewController:viewController animated:YES];
 }
 
 @end

@@ -26,6 +26,7 @@
 		B158FCF0156C88F600EDE9D1 /* QuantityViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B158FCEE156C88F600EDE9D1 /* QuantityViewController.xib */; };
 		B158FCFF156CB25C00EDE9D1 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B158FCFD156CB25B00EDE9D1 /* Icon@2x.png */; };
 		B158FD00156CB25C00EDE9D1 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = B158FCFE156CB25C00EDE9D1 /* Icon.png */; };
+		B158FD03156DCD4800EDE9D1 /* RecordCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B158FD02156DCD4800EDE9D1 /* RecordCell.m */; };
 		B175862C1560DE6A00C32A09 /* Settings.png in Resources */ = {isa = PBXBuildFile; fileRef = B175862B1560DE6A00C32A09 /* Settings.png */; };
 		B17586301560E09500C32A09 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B175862E1560E09500C32A09 /* SettingsViewController.m */; };
 		B17586311560E09500C32A09 /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B175862F1560E09500C32A09 /* SettingsViewController.xib */; };
@@ -130,6 +131,8 @@
 		B158FCEE156C88F600EDE9D1 /* QuantityViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QuantityViewController.xib; sourceTree = "<group>"; };
 		B158FCFD156CB25B00EDE9D1 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		B158FCFE156CB25C00EDE9D1 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
+		B158FD01156DCD4700EDE9D1 /* RecordCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordCell.h; sourceTree = "<group>"; };
+		B158FD02156DCD4800EDE9D1 /* RecordCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecordCell.m; sourceTree = "<group>"; };
 		B175862B1560DE6A00C32A09 /* Settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Settings.png; sourceTree = "<group>"; };
 		B175862D1560E09500C32A09 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
 		B175862E1560E09500C32A09 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
@@ -276,6 +279,7 @@
 			children = (
 				B158FC9A156A0B5700EDE9D1 /* Keypad */,
 				B1906F451562C35A00FE10D3 /* Categories */,
+				B158FD05156DCFC900EDE9D1 /* Cells */,
 				B175862B1560DE6A00C32A09 /* Settings.png */,
 				B158FCFD156CB25B00EDE9D1 /* Icon@2x.png */,
 				B158FCFE156CB25C00EDE9D1 /* Icon.png */,
@@ -302,10 +306,10 @@
 				B1906FAB1563C0B400FE10D3 /* ScanViewController.h */,
 				B1906FAC1563C0B400FE10D3 /* ScanViewController.m */,
 				B1906FAD1563C0B400FE10D3 /* ScanViewController.xib */,
-				B13CAB9F1560D74400E2E7FF /* Supporting Files */,
 				B158FCEC156C88F600EDE9D1 /* QuantityViewController.h */,
 				B158FCED156C88F600EDE9D1 /* QuantityViewController.m */,
 				B158FCEE156C88F600EDE9D1 /* QuantityViewController.xib */,
+				B13CAB9F1560D74400E2E7FF /* Supporting Files */,
 			);
 			path = Stocktakr;
 			sourceTree = "<group>";
@@ -347,6 +351,15 @@
 				B158FC9F156A0B8F00EDE9D1 /* KeypadView.m */,
 			);
 			name = Keypad;
+			sourceTree = "<group>";
+		};
+		B158FD05156DCFC900EDE9D1 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				B158FD01156DCD4700EDE9D1 /* RecordCell.h */,
+				B158FD02156DCD4800EDE9D1 /* RecordCell.m */,
+			);
+			name = Cells;
 			sourceTree = "<group>";
 		};
 		B17586441560EBEF00C32A09 /* Libraries */ = {
@@ -686,6 +699,7 @@
 				B143761B15656F1F005034F6 /* NSString+URLEncoding.m in Sources */,
 				B158FCA0156A0B8F00EDE9D1 /* KeypadView.m in Sources */,
 				B158FCEF156C88F600EDE9D1 /* QuantityViewController.m in Sources */,
+				B158FD03156DCD4800EDE9D1 /* RecordCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
