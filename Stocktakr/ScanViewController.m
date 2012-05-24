@@ -67,13 +67,13 @@
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
 	if (textField == self.barcodeField) {
 		NSString *barcode = textField.text;
+		textField.text = @"";
 		
 		NSDictionary *product = [[ProductManager sharedManager] productForBarcode:barcode];
 		if (!product) {
 			[[[UIAlertView alloc] initWithTitle:@"Invalid barcode" message:@"Unable to find a product matching barcode" delegate:nil cancelButtonTitle:@"Close" otherButtonTitles:nil] show];
+			return YES;
 		}
-		
-		textField.text = @"";
 		
 		self.descriptionLabel.text = [product valueForKey:@"description"];
 		self.barcodeLabel.text = [product valueForKey:@"barcode"];
