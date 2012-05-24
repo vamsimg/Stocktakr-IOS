@@ -280,35 +280,13 @@
 				B158FC9A156A0B5700EDE9D1 /* Keypad */,
 				B1906F451562C35A00FE10D3 /* Categories */,
 				B158FD05156DCFC900EDE9D1 /* Cells */,
-				B175862B1560DE6A00C32A09 /* Settings.png */,
-				B158FCFD156CB25B00EDE9D1 /* Icon@2x.png */,
-				B158FCFE156CB25C00EDE9D1 /* Icon.png */,
+				B158FD08156DD05E00EDE9D1 /* View Controllers */,
 				B13CABA71560D74400E2E7FF /* AppDelegate.h */,
 				B13CABA81560D74400E2E7FF /* AppDelegate.m */,
 				B17586321560E35400C32A09 /* ProductManager.h */,
 				B17586331560E35400C32A09 /* ProductManager.m */,
 				B1906EF41561CB6200FE10D3 /* Constants.h */,
-				B13CABC71560D7BA00E2E7FF /* HomeViewController.h */,
-				B13CABC81560D7BA00E2E7FF /* HomeViewController.m */,
-				B13CABC91560D7BA00E2E7FF /* HomeViewController.xib */,
-				B175862D1560E09500C32A09 /* SettingsViewController.h */,
-				B175862E1560E09500C32A09 /* SettingsViewController.m */,
-				B175862F1560E09500C32A09 /* SettingsViewController.xib */,
-				B1906EFF15622BA800FE10D3 /* PriceCheckViewController.h */,
-				B1906F0015622BA800FE10D3 /* PriceCheckViewController.m */,
-				B1906F0115622BA800FE10D3 /* PriceCheckViewController.xib */,
-				B1906F0415622BB900FE10D3 /* StocktakeViewController.h */,
-				B1906F0515622BB900FE10D3 /* StocktakeViewController.m */,
-				B1906F0615622BB900FE10D3 /* StocktakeViewController.xib */,
-				B1906FA31563B36900FE10D3 /* RecordsViewController.h */,
-				B1906FA41563B36900FE10D3 /* RecordsViewController.m */,
-				B1906FA51563B36A00FE10D3 /* RecordsViewController.xib */,
-				B1906FAB1563C0B400FE10D3 /* ScanViewController.h */,
-				B1906FAC1563C0B400FE10D3 /* ScanViewController.m */,
-				B1906FAD1563C0B400FE10D3 /* ScanViewController.xib */,
-				B158FCEC156C88F600EDE9D1 /* QuantityViewController.h */,
-				B158FCED156C88F600EDE9D1 /* QuantityViewController.m */,
-				B158FCEE156C88F600EDE9D1 /* QuantityViewController.xib */,
+				B158FD07156DD04D00EDE9D1 /* Images */,
 				B13CAB9F1560D74400E2E7FF /* Supporting Files */,
 			);
 			path = Stocktakr;
@@ -360,6 +338,44 @@
 				B158FD02156DCD4800EDE9D1 /* RecordCell.m */,
 			);
 			name = Cells;
+			sourceTree = "<group>";
+		};
+		B158FD07156DD04D00EDE9D1 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				B175862B1560DE6A00C32A09 /* Settings.png */,
+				B158FCFD156CB25B00EDE9D1 /* Icon@2x.png */,
+				B158FCFE156CB25C00EDE9D1 /* Icon.png */,
+			);
+			name = Images;
+			sourceTree = "<group>";
+		};
+		B158FD08156DD05E00EDE9D1 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				B13CABC71560D7BA00E2E7FF /* HomeViewController.h */,
+				B13CABC81560D7BA00E2E7FF /* HomeViewController.m */,
+				B13CABC91560D7BA00E2E7FF /* HomeViewController.xib */,
+				B175862D1560E09500C32A09 /* SettingsViewController.h */,
+				B175862E1560E09500C32A09 /* SettingsViewController.m */,
+				B175862F1560E09500C32A09 /* SettingsViewController.xib */,
+				B1906EFF15622BA800FE10D3 /* PriceCheckViewController.h */,
+				B1906F0015622BA800FE10D3 /* PriceCheckViewController.m */,
+				B1906F0115622BA800FE10D3 /* PriceCheckViewController.xib */,
+				B1906F0415622BB900FE10D3 /* StocktakeViewController.h */,
+				B1906F0515622BB900FE10D3 /* StocktakeViewController.m */,
+				B1906F0615622BB900FE10D3 /* StocktakeViewController.xib */,
+				B1906FA31563B36900FE10D3 /* RecordsViewController.h */,
+				B1906FA41563B36900FE10D3 /* RecordsViewController.m */,
+				B1906FA51563B36A00FE10D3 /* RecordsViewController.xib */,
+				B1906FAB1563C0B400FE10D3 /* ScanViewController.h */,
+				B1906FAC1563C0B400FE10D3 /* ScanViewController.m */,
+				B1906FAD1563C0B400FE10D3 /* ScanViewController.xib */,
+				B158FCEC156C88F600EDE9D1 /* QuantityViewController.h */,
+				B158FCED156C88F600EDE9D1 /* QuantityViewController.m */,
+				B158FCEE156C88F600EDE9D1 /* QuantityViewController.xib */,
+			);
+			name = "View Controllers";
 			sourceTree = "<group>";
 		};
 		B17586441560EBEF00C32A09 /* Libraries */ = {
