@@ -271,6 +271,26 @@ static NSString *const ZippedStocktakeTransactionsPath = @"MobileItemHandler/Zip
 	return YES;
 }
 
+- (NSNumber *)quantityForBarcode:(NSString *)barcode {
+	NSString *code = [self productCodeForBarcode:barcode];
+	if (!code) {
+		return nil;
+	}
+	
+	__block NSNumber *quantity = nil;
+	[self.databaseQueue inDatabase:^(FMDatabase *db) {
+		FMResultSet *rs = [db executeQuery:@"SELECT quantity FROM quantities WHERE code = ?", code];
+		if ([rs next]) {
+			quantity = [NSNumber numberWithDouble:[rs doubleForColumn:@"quantity"]];
+		} else {
+			quantity = [NSNumber numberWithInt:0];
+		}
+		[rs close];
+	}];
+	
+	return quantity;
+}
+
 - (void)deleteRecordForProduct:(NSString *)productCode {
 	[self.databaseQueue inDatabase:^(FMDatabase *db) {
 		[db executeUpdate:@"DELETE FROM quantities WHERE code = ?", productCode];
