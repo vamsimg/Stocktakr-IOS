@@ -110,10 +110,7 @@ static NSString *const ZippedStocktakeTransactionsPath = @"MobileItemHandler/Zip
 	
 	AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
 		BOOL successful = ![[JSON valueForKey:@"is_error"] boolValue];
-		[self.databaseQueue inDatabase:^(FMDatabase *db) {
-			[db executeUpdate:@"DELETE FROM products"];
-			[db executeUpdate:@"DELETE FROM quantities"];
-		}];
+		[self deleteAll];
 		complete(successful);
 	} failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
 		NSLog(@"FAILURE: %@", JSON);
@@ -297,6 +294,12 @@ static NSString *const ZippedStocktakeTransactionsPath = @"MobileItemHandler/Zip
 	}];
 }
 
+- (void)deleteAll {
+	[self.databaseQueue inTransaction:^(FMDatabase *db, BOOL *rollback) {
+		[db executeUpdate:@"DELETE FROM products"];
+		[db executeUpdate:@"DELETE FROM quantities"];
+	}];
+}
 
 #pragma mark - Private methods
 

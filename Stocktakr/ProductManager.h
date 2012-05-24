@@ -28,4 +28,6 @@
 - (NSNumber *)quantityForBarcode:(NSString *)barcode;
 - (void)deleteRecordForProduct:(NSString *)productCode;
 
+- (void)deleteAll;
+
 @end
