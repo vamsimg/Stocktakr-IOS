@@ -87,18 +87,25 @@ static NSString *const ZippedStocktakeTransactionsPath = @"MobileItemHandler/Zip
 		[self.databaseQueue inDatabase:^(FMDatabase *db) {
 			[db executeUpdate:@"DELETE FROM products"];
 		}];
-		NSInteger lastPage = (itemCount / DOWNLOAD_BATCH_SIZE);
-		double numPages = lastPage + 1;
-		__block NSMutableIndexSet *downloadedPages = [NSMutableIndexSet indexSetWithIndexesInRange:NSMakeRange(0, lastPage + 1)];
-		for (int i = 0; i <= lastPage; i++) {
-			[self zippedItemsWithStoreId:storeId password:password page:i success:^{
-				[downloadedPages removeIndex:i];
-				if ([downloadedPages count]) {
-					progress((numPages - [downloadedPages count]) / numPages);
-				} else {
-					complete(YES);
-				}
-			}];
+		if (itemCount == 0) {
+			// We want the completion handler to be run after this method returns to mimic what happens if items are actually fetched
+			dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.01 * NSEC_PER_SEC), dispatch_get_main_queue(), ^(void){
+				complete(YES);
+			});
+		} else {
+			NSInteger lastPage = (itemCount / DOWNLOAD_BATCH_SIZE);
+			double numPages = lastPage + 1;
+			__block NSMutableIndexSet *downloadedPages = [NSMutableIndexSet indexSetWithIndexesInRange:NSMakeRange(0, lastPage + 1)];
+			for (int i = 0; i <= lastPage; i++) {
+				[self zippedItemsWithStoreId:storeId password:password page:i success:^{
+					[downloadedPages removeIndex:i];
+					if ([downloadedPages count]) {
+						progress((numPages - [downloadedPages count]) / numPages);
+					} else {
+						complete(YES);
+					}
+				}];
+			}
 		}
 	}];
 }
