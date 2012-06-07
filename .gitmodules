@@ -1,6 +1,6 @@
 [submodule "lib/fmdb"]
 	path = lib/fmdb
-	url = https://github.com/ccgus/fmdb.git
+	url = https://github.com/shermanl/fmdb.git
 [submodule "lib/AFNetworking"]
 	path = lib/AFNetworking
 	url = https://github.com/AFNetworking/AFNetworking.git
