@@ -400,9 +400,11 @@ static NSString *const ZippedStocktakeTransactionsPath = @"MobileItemHandler/Zip
 	[zippedData writeToFile:filename atomically:YES];
 	
 	[SSZipArchive unzipFileAtPath:filename toDestination:folder];
-	
+
 	NSData *productData = [NSData dataWithContentsOfFile:[folder stringByAppendingPathComponent:@"data"]];
-	NSArray *products = [[CJSONDeserializer deserializer] deserialize:productData error:nil];
+	CJSONDeserializer *deserializer = [CJSONDeserializer deserializer];
+	deserializer.allowedEncoding = NSISOLatin1StringEncoding;
+	NSArray *products = [deserializer deserialize:productData error:nil];
 	
 	[[NSFileManager defaultManager] removeItemAtPath:filename error:nil];
 	[[NSFileManager defaultManager] removeItemAtPath:folder error:nil];
