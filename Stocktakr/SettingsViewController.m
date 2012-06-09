@@ -58,25 +58,23 @@
 }
 
 - (IBAction)setQuantityChanged:(UISwitch *)toggleSwitch {
-	[[NSUserDefaults standardUserDefaults] setBool:toggleSwitch.on forKey:SET_QUANTITY_KEY];
+	NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+	[userDefaults setBool:toggleSwitch.on forKey:SET_QUANTITY_KEY];
+	[userDefaults synchronize];
 }
 
 
 #pragma mark - UITextFieldDelegate
-
-- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
-	NSString *barcode = [textField.text stringByReplacingCharactersInRange:range withString:string];
-	[[NSUserDefaults standardUserDefaults] setValue:barcode forKey:NAME_KEY];
-	
-	return YES;
-}
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
 	if (textField == self.storeIdField) {
 		[self.passwordField becomeFirstResponder];
 	} else if (textField == self.passwordField) {
 		[self testConnectionWithStoreId:self.storeIdField.text password:self.passwordField.text];
-	} else {
+	} else if (textField == self.nameField) {
+		NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+		[userDefaults setValue:self.nameField.text forKey:NAME_KEY];
+		[userDefaults synchronize];
 		[textField resignFirstResponder];
 	}
 	
@@ -108,6 +106,7 @@
 			NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
 			[userDefaults setValue:storeId forKey:STORE_ID_KEY];
 			[userDefaults setValue:password forKey:PASSWORD_KEY];
+			[userDefaults synchronize];
 			hud.labelText = @"Successful";
 			dispatch_after(dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC), dispatch_get_main_queue(), ^(void){
 				[MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
@@ -120,6 +119,11 @@
 }
 
 - (void)close:(UIBarButtonItem *)barButton {
+	if ([self.nameField.text length]) {
+		NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+		[userDefaults setValue:self.nameField.text forKey:NAME_KEY];
+		[userDefaults synchronize];
+	}	
 	[self dismissModalViewControllerAnimated:YES];
 }
 
