@@ -67,8 +67,8 @@ static NSString *const ZippedStocktakeTransactionsPath = @"MobileItemHandler/Zip
 		NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
 		self.databaseQueue = [FMDatabaseQueue databaseQueueWithPath:[documentsDirectory stringByAppendingPathComponent:@"stocktakr.sqlite"]];
 		[self.databaseQueue inDatabase:^(FMDatabase *db) {
-			[db executeUpdate:@"CREATE TABLE IF NOT EXISTS products(code STRING PRIMARY KEY, barcode STRING, description STRING, price STRING)"];
-			[db executeUpdate:@"CREATE TABLE IF NOT EXISTS quantities(code STRING PRIMARY KEY, quantity DOUBLE, last_modified STRING)"];
+			[db executeUpdate:@"CREATE TABLE IF NOT EXISTS products(code TEXT PRIMARY KEY, barcode TEXT, description TEXT, price TEXT)"];
+			[db executeUpdate:@"CREATE TABLE IF NOT EXISTS quantities(code TEXT PRIMARY KEY, quantity DOUBLE, last_modified TEXT)"];
 		}];
 	}
 	return self;
