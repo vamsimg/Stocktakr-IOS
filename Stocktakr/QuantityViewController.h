@@ -10,7 +10,11 @@
 #import "KeypadView.h"
 
 
+@protocol ProductDataSource;
+
 @interface QuantityViewController : UIViewController <KeypadViewDelegate>
+
+@property (nonatomic, weak) id<ProductDataSource> dataSource;
 
 @property (nonatomic, strong) IBOutlet UILabel *descriptionLabel;
 @property (nonatomic, strong) IBOutlet UITextField *quantityField;

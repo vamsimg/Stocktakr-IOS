@@ -25,6 +25,11 @@ static NSString *const ItemCountPath = @"MobileItemHandler/ItemCount";
 static NSString *const TestConnectionPath = @"MobileItemHandler/TestConnection";
 static NSString *const ZippedItemsPath = @"MobileItemHandler/ZippedItems";
 static NSString *const ZippedStocktakeTransactionsPath = @"MobileItemHandler/ZippedStocktakeTransactions";
+static NSString *const PurchaseOrderItemsPath = @"MobileItemHandler/PurchaseOrderItems";
+
+static NSString *const ProductsTable = @"products";
+static NSString *const StocktakeQuantitiesTable = @"stocktake_quantities";
+static NSString *const PurchaseOrderQuantitiesTable = @"purchase_order_quantities";
 
 
 @interface ProductManager ()
@@ -39,8 +44,17 @@ static NSString *const ZippedStocktakeTransactionsPath = @"MobileItemHandler/Zip
 - (NSData *)zipRecords:(NSArray *)records;
 - (NSArray *)productsFromZippedText:(NSString *)zippedText;
 
+- (NSDateFormatter *)urlDateFormatter;
 - (NSDateFormatter *)dateFormatter;
 - (NSString *)clientType;
+
+- (void)deleteAll;
+
+- (NSArray *)recordsForTable:(NSString *)table;
+- (NSNumber *)quantityForTable:(NSString *)table andBarcode:(NSString *)barcode;
+- (NSNumber *)incrementQuantityForTable:(NSString *)table andBarcode:(NSString *)barcode;
+- (BOOL)setQuantity:(NSNumber *)quantity forTable:(NSString *)table andBarcode:(NSString *)barcode;
+- (void)deleteRecordForTable:(NSString *)table andProductCode:(NSString *)productCode;
 
 @end
 
@@ -67,8 +81,9 @@ static NSString *const ZippedStocktakeTransactionsPath = @"MobileItemHandler/Zip
 		NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
 		self.databaseQueue = [FMDatabaseQueue databaseQueueWithPath:[documentsDirectory stringByAppendingPathComponent:@"stocktakr.sqlite"]];
 		[self.databaseQueue inDatabase:^(FMDatabase *db) {
-			[db executeUpdate:@"CREATE TABLE IF NOT EXISTS products(code TEXT PRIMARY KEY, barcode TEXT, description TEXT, price TEXT)"];
-			[db executeUpdate:@"CREATE TABLE IF NOT EXISTS quantities(code TEXT PRIMARY KEY, quantity DOUBLE, last_modified TEXT)"];
+			[db executeUpdate:[NSString stringWithFormat:@"CREATE TABLE IF NOT EXISTS %@ (code TEXT PRIMARY KEY, barcode TEXT, description TEXT, price TEXT)", ProductsTable]];
+			[db executeUpdate:[NSString stringWithFormat:@"CREATE TABLE IF NOT EXISTS %@ (code TEXT PRIMARY KEY, quantity DOUBLE, last_modified TEXT)", StocktakeQuantitiesTable]];
+			[db executeUpdate:[NSString stringWithFormat:@"CREATE TABLE IF NOT EXISTS %@ (code TEXT PRIMARY KEY, quantity DOUBLE, last_modified TEXT)", PurchaseOrderQuantitiesTable]];
 		}];
 	}
 	return self;
@@ -79,13 +94,13 @@ static NSString *const ZippedStocktakeTransactionsPath = @"MobileItemHandler/Zip
 }
 
 
-#pragma mark - Public methods
+#pragma mark - Networking
 
 - (void)loadProductListWithStoreId:(NSString *)storeId password:(NSString *)password complete:(void (^)(BOOL success))complete progress:(void (^)(double))progress {
 	[self itemCountWithStoreId:storeId password:password success:^(id JSON) {
 		NSInteger itemCount = [[JSON valueForKey:@"itemCount"] integerValue];
 		[self.databaseQueue inDatabase:^(FMDatabase *db) {
-			[db executeUpdate:@"DELETE FROM products"];
+			[db executeUpdate:[NSString stringWithFormat:@"DELETE FROM %@", ProductsTable]];
 		}];
 		if (itemCount == 0) {
 			// We want the completion handler to be run after this method returns to mimic what happens if items are actually fetched
@@ -136,7 +151,7 @@ static NSString *const ZippedStocktakeTransactionsPath = @"MobileItemHandler/Zip
 		
 		__block NSMutableArray *records = [NSMutableArray array];
 		[self.databaseQueue inDatabase:^(FMDatabase *db) {
-			FMResultSet *rs = [db executeQuery:@"SELECT * FROM quantities, products WHERE quantities.code = products.code"];
+			FMResultSet *rs = [db executeQuery:[NSString stringWithFormat:@"SELECT * FROM %1$@, %2$@ WHERE %1$@.code = %2$@.code", ProductsTable, StocktakeQuantitiesTable]];
 			while ([rs next]) {
 				NSMutableDictionary *record = [NSMutableDictionary dictionary];
 				[record setValue:[rs stringForColumn:@"code"] forKey:@"product_code"];
@@ -156,12 +171,11 @@ static NSString *const ZippedStocktakeTransactionsPath = @"MobileItemHandler/Zip
 			BOOL success = ![[JSON valueForKey:@"is_error"] boolValue];
 			if (success) {
 				[self.databaseQueue inDatabase:^(FMDatabase *db) {
-					[db executeUpdate:@"DELETE FROM quantities"];
+					[db executeUpdate:[NSString stringWithFormat:@"DELETE FROM %@", StocktakeQuantitiesTable]];
 				}];
 			}
 			complete(success);
 		} failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
-			NSLog(@"FAILL %@", error);
 			complete(NO);
 		}];
 		
@@ -169,43 +183,64 @@ static NSString *const ZippedStocktakeTransactionsPath = @"MobileItemHandler/Zip
 	});
 }
 
-- (NSInteger)numberOfProducts {
-	__block NSInteger numProducts = 0;
-	[self.databaseQueue inDatabase:^(FMDatabase *db) {
-		numProducts = [db intForQuery:@"SELECT COUNT(*) FROM products"];
-	}];
-	return numProducts;
-}
-
-- (NSInteger)numberOfRecords {
-	__block NSInteger numRecords = 0;
-	[self.databaseQueue inDatabase:^(FMDatabase *db) {
-		numRecords = [db intForQuery:@"SELECT COUNT(*) FROM quantities"];
-	}];
-	return numRecords;
-}
-
-- (NSArray *)records {
+- (void)uploadPurchaseOrdersWithStoreId:(NSString *)storeId password:(NSString *)password name:(NSString *)name complete:(void (^)(BOOL success))complete {
+	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/%@/%@/%@/%@/%@", HostName, PurchaseOrderItemsPath, storeId, password, [self clientType], [name urlEncode], [[self urlDateFormatter] stringFromDate:[NSDate date]]]];
+	
+	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+	[request addValue:@"application/json " forHTTPHeaderField:@"Content-type"];
+	[request setHTTPMethod:@"POST"];
+	
 	__block NSMutableArray *records = [NSMutableArray array];
 	[self.databaseQueue inDatabase:^(FMDatabase *db) {
-		FMResultSet *rs = [db executeQuery:@"SELECT * FROM quantities, products WHERE quantities.code = products.code"];
+		FMResultSet *rs = [db executeQuery:[NSString stringWithFormat:@"SELECT * FROM %1$@, %2$@ WHERE %1$@.code = %2$@.code", ProductsTable, PurchaseOrderQuantitiesTable]];
 		while ([rs next]) {
 			NSMutableDictionary *record = [NSMutableDictionary dictionary];
-			[record setValue:[rs stringForColumn:@"code"] forKey:@"code"];
-			[record setValue:[rs stringForColumn:@"barcode"] forKey:@"barcode"];
+			[record setValue:[rs stringForColumn:@"code"] forKey:@"product_code"];
+			[record setValue:[rs stringForColumn:@"barcode"] forKey:@"product_barcode"];
 			[record setValue:[rs stringForColumn:@"description"] forKey:@"description"];
 			[record setValue:[NSNumber numberWithDouble:[rs doubleForColumn:@"quantity"]] forKey:@"quantity"];
+			[record setValue:[rs stringForColumn:@"last_modified"] forKey:@"stocktake_datetime"];
 			
 			[records addObject:record];
 		}
 	}];
-	return records;
+	
+	NSString *recordsString = [[NSString alloc] initWithData:[[CJSONSerializer serializer] serializeArray:records error:nil] encoding:NSUTF8StringEncoding];
+	
+	NSDictionary *payload = [NSDictionary dictionaryWithObject:recordsString forKey:@"transactions"];
+	[request setHTTPBody:[[CJSONSerializer serializer] serializeDictionary:payload error:nil]];
+	
+	AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+		BOOL success = ![[JSON valueForKey:@"is_error"] boolValue];
+		if (success) {
+			[self.databaseQueue inDatabase:^(FMDatabase *db) {
+				[db executeUpdate:[NSString stringWithFormat:@"DELETE FROM %@", PurchaseOrderQuantitiesTable]];
+			}];
+		}
+		complete(success);
+	} failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+		complete(NO);
+	}];
+	
+	[operation start];
+
+}
+
+
+#pragma mark - Products
+
+- (NSInteger)numberOfProducts {
+	__block NSInteger numProducts = 0;
+	[self.databaseQueue inDatabase:^(FMDatabase *db) {
+		numProducts = [db intForQuery:[NSString stringWithFormat:@"SELECT COUNT(*) FROM %@", ProductsTable]];
+	}];
+	return numProducts;
 }
 
 - (NSDictionary *)productForBarcode:(NSString *)barcode {
 	__block NSMutableDictionary *product = nil;
 	[self.databaseQueue inDatabase:^(FMDatabase *db) {
-		FMResultSet *rs = [db executeQuery:@"SELECT * FROM products WHERE barcode = ?", barcode];
+		FMResultSet *rs = [db executeQuery:[NSString stringWithFormat:@"SELECT * FROM %@ WHERE barcode = ?", ProductsTable], barcode];
 		// Get the first record, if there isn't one then we can't find the barcode
 		if (![rs next]) {
 			return;
@@ -223,89 +258,49 @@ static NSString *const ZippedStocktakeTransactionsPath = @"MobileItemHandler/Zip
 	return product;
 }
 
-- (NSNumber *)incrementQuantityForBarcode:(NSString *)barcode {
-	NSString *code = [self productCodeForBarcode:barcode];
-	if (!code) {
-		return nil;
-	}
-	
-	NSString *lastModified = [[self dateFormatter] stringFromDate:[NSDate date]];
-	__block NSNumber *newQuantity = nil;
-	
-	[self.databaseQueue inDatabase:^(FMDatabase *db) {
-		FMResultSet *rs = [db executeQuery:@"SELECT quantity FROM quantities WHERE code = ?", code];
-		if ([rs next]) {
-			// A current record exists
-			double quantity = [rs doubleForColumn:@"quantity"];
-			newQuantity = [NSNumber numberWithDouble:quantity + 1];
-			[db executeUpdate:@"UPDATE quantities SET quantity = ?, last_modified = ? WHERE code = ?", newQuantity, lastModified, code];
-		} else {
-			newQuantity = [NSNumber numberWithInt:1];
-			// No record exists, make a new one
-			[db executeUpdate:@"INSERT INTO quantities (code, quantity, last_modified) VALUES (?, ?, ?)", code, newQuantity, lastModified];
-		}
-		[rs close];
-	}];
-	
-	return newQuantity;
+
+#pragma mark - Stocktake
+
+- (NSArray *)stocktakeRecords {
+	return [self recordsForTable:StocktakeQuantitiesTable];
 }
 
-- (BOOL)setQuantity:(NSNumber *)quantity forBarcode:(NSString *)barcode {
-	NSString *code = [self productCodeForBarcode:barcode];
-	if (!code) {
-		return NO;
-	}
-	
-	if ([quantity isEqualToNumber:[NSNumber numberWithInt:0]]) {
-		[self deleteRecordForProduct:code];
-		return YES;
-	}
-	
-	NSString *lastModified = [[self dateFormatter] stringFromDate:[NSDate date]];
-		
-	[self.databaseQueue inDatabase:^(FMDatabase *db) {
-		int numRecords = [db intForQuery:@"SELECT COUNT(*) FROM quantities WHERE code = ?", code];
-		if (numRecords) {
-			[db executeUpdate:@"UPDATE quantities SET quantity = ?, last_modified = ? WHERE code = ?", quantity, lastModified, code];
-		} else {
-			[db executeUpdate:@"INSERT INTO quantities (code, quantity, last_modified) VALUES (?, ?, ?)", code, quantity, lastModified];
-		}
-	}];
-	
-	return YES;
+- (NSNumber *)incrementStocktakeQuantityForBarcode:(NSString *)barcode {
+	return [self incrementQuantityForTable:StocktakeQuantitiesTable andBarcode:barcode];
 }
 
-- (NSNumber *)quantityForBarcode:(NSString *)barcode {
-	NSString *code = [self productCodeForBarcode:barcode];
-	if (!code) {
-		return nil;
-	}
-	
-	__block NSNumber *quantity = nil;
-	[self.databaseQueue inDatabase:^(FMDatabase *db) {
-		FMResultSet *rs = [db executeQuery:@"SELECT quantity FROM quantities WHERE code = ?", code];
-		if ([rs next]) {
-			quantity = [NSNumber numberWithDouble:[rs doubleForColumn:@"quantity"]];
-		} else {
-			quantity = [NSNumber numberWithInt:0];
-		}
-		[rs close];
-	}];
-	
-	return quantity;
+- (BOOL)setStocktakeQuantity:(NSNumber *)quantity forBarcode:(NSString *)barcode {
+	return [self setQuantity:quantity forTable:StocktakeQuantitiesTable andBarcode:barcode];
 }
 
-- (void)deleteRecordForProduct:(NSString *)productCode {
-	[self.databaseQueue inDatabase:^(FMDatabase *db) {
-		[db executeUpdate:@"DELETE FROM quantities WHERE code = ?", productCode];
-	}];
+- (NSNumber *)stocktakeQuantityForBarcode:(NSString *)barcode {
+	return [self quantityForTable:StocktakeQuantitiesTable andBarcode:barcode];
 }
 
-- (void)deleteAll {
-	[self.databaseQueue inTransaction:^(FMDatabase *db, BOOL *rollback) {
-		[db executeUpdate:@"DELETE FROM products"];
-		[db executeUpdate:@"DELETE FROM quantities"];
-	}];
+- (void)deleteStocktakeRecordForProduct:(NSString *)productCode {
+	[self deleteRecordForTable:StocktakeQuantitiesTable andProductCode:productCode];
+}
+
+
+#pragma mark - Purchase Order
+
+- (NSArray *)purchaseOrderRecords {
+	return [self recordsForTable:PurchaseOrderQuantitiesTable];
+}
+
+- (NSNumber *)incrementPurchaseOrderQuantityForBarcode:(NSString *)barcode {
+	return [self incrementQuantityForTable:PurchaseOrderQuantitiesTable andBarcode:barcode];
+}
+
+- (BOOL)setPurchaseOrderQuantity:(NSNumber *)quantity forBarcode:(NSString *)barcode {
+	return [self setQuantity:quantity forTable:PurchaseOrderQuantitiesTable andBarcode:barcode];
+}
+
+- (NSNumber *)purchaseOrderQuantityForBarcode:(NSString *)barcode {
+	return [self quantityForTable:PurchaseOrderQuantitiesTable andBarcode:barcode];
+}
+- (void)deletePurchaseOrderRecordForProduct:(NSString *)productCode {
+	
 }
 
 #pragma mark - Private methods
@@ -318,7 +313,7 @@ static NSString *const ZippedStocktakeTransactionsPath = @"MobileItemHandler/Zip
 	AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
 		success(JSON);
 	} failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
-		NSLog(@"FAILURE: %@", error);
+		NSLog(@"ERROR: %@", error);
 	}];
 	
 	[operation start];
@@ -342,7 +337,7 @@ static NSString *const ZippedStocktakeTransactionsPath = @"MobileItemHandler/Zip
 					[values setValue:[product valueForKey:@"product_barcode"] forKey:@"barcode"];
 					[values setValue:[product valueForKey:@"description"] forKey:@"description"];
 					[values setValue:[product valueForKey:@"sale_price"] forKey:@"price"];
-					[db executeUpdate:@"INSERT INTO products (code, barcode, description, price) VALUES (:code, :barcode, :description, :price)" withParameterDictionary:values];
+					[db executeUpdate:[NSString stringWithFormat:@"INSERT INTO %@ (code, barcode, description, price) VALUES (:code, :barcode, :description, :price)", ProductsTable] withParameterDictionary:values];
 				}
 			}];
 			
@@ -351,7 +346,7 @@ static NSString *const ZippedStocktakeTransactionsPath = @"MobileItemHandler/Zip
 			});
 		});
 	} failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
-		NSLog(@"FAIL: %@ %@", response, error);
+		NSLog(@"ERROR: %@ %@", response, error);
 	}];
 	
 	[operation start];
@@ -360,7 +355,7 @@ static NSString *const ZippedStocktakeTransactionsPath = @"MobileItemHandler/Zip
 - (NSString *)productCodeForBarcode:(NSString *)barcode {
 	__block NSString *code = nil;
 	[self.databaseQueue inDatabase:^(FMDatabase *db) {
-		FMResultSet *rs = [db executeQuery:@"SELECT code FROM products WHERE barcode = ?", barcode];
+		FMResultSet *rs = [db executeQuery:[NSString stringWithFormat:@"SELECT code FROM %@ WHERE barcode = ?", ProductsTable], barcode];
 		// Get the first record, if there isn't one then we can't find the barcode
 		if (![rs next]) {
 			return;
@@ -412,6 +407,15 @@ static NSString *const ZippedStocktakeTransactionsPath = @"MobileItemHandler/Zip
 	return products;
 }
 
+- (NSDateFormatter *)urlDateFormatter {
+	static NSDateFormatter *dateFormatter = nil;
+	if (!dateFormatter) {
+		dateFormatter = [[NSDateFormatter alloc] init];
+		[dateFormatter setDateFormat:@"yyyy-MM-dd_HH-mm-ss"];
+	}
+	return dateFormatter;
+}
+
 - (NSDateFormatter *)dateFormatter {
 	static NSDateFormatter *dateFormatter = nil;
 	if (!dateFormatter) {
@@ -423,6 +427,108 @@ static NSString *const ZippedStocktakeTransactionsPath = @"MobileItemHandler/Zip
 
 - (NSString *)clientType {
 	return [[NSString stringWithFormat:@"iPhone|%@", [[UIDevice currentDevice] systemVersion]] urlEncode];
+}
+
+- (void)deleteAll {
+	[self.databaseQueue inTransaction:^(FMDatabase *db, BOOL *rollback) {
+		[db executeUpdate:[NSString stringWithFormat:@"DELETE FROM %@", ProductsTable]];
+		[db executeUpdate:[NSString stringWithFormat:@"DELETE FROM %@", StocktakeQuantitiesTable]];
+		[db executeUpdate:[NSString stringWithFormat:@"DELETE FROM %@", PurchaseOrderQuantitiesTable]];
+	}];
+}
+
+- (NSArray *)recordsForTable:(NSString *)table {
+	__block NSMutableArray *records = [NSMutableArray array];
+	[self.databaseQueue inDatabase:^(FMDatabase *db) {
+		FMResultSet *rs = [db executeQuery:[NSString stringWithFormat:@"SELECT * FROM %1$@, %2$@ WHERE %1$@.code = %2$@.code", ProductsTable, table]];
+		while ([rs next]) {
+			NSMutableDictionary *record = [NSMutableDictionary dictionary];
+			[record setValue:[rs stringForColumn:@"code"] forKey:@"code"];
+			[record setValue:[rs stringForColumn:@"barcode"] forKey:@"barcode"];
+			[record setValue:[rs stringForColumn:@"description"] forKey:@"description"];
+			[record setValue:[NSNumber numberWithDouble:[rs doubleForColumn:@"quantity"]] forKey:@"quantity"];
+			
+			[records addObject:record];
+		}
+	}];
+	return records;
+}
+- (NSNumber *)quantityForTable:(NSString *)table andBarcode:(NSString *)barcode {
+	NSString *code = [self productCodeForBarcode:barcode];
+	if (!code) {
+		return nil;
+	}
+	
+	__block NSNumber *quantity = nil;
+	[self.databaseQueue inDatabase:^(FMDatabase *db) {
+		FMResultSet *rs = [db executeQuery:[NSString stringWithFormat:@"SELECT quantity FROM %@ WHERE code = ?", table], code];
+		if ([rs next]) {
+			quantity = [NSNumber numberWithDouble:[rs doubleForColumn:@"quantity"]];
+		} else {
+			quantity = [NSNumber numberWithInt:0];
+		}
+		[rs close];
+	}];
+	
+	return quantity;
+}
+
+- (NSNumber *)incrementQuantityForTable:(NSString *)table andBarcode:(NSString *)barcode {
+	NSString *code = [self productCodeForBarcode:barcode];
+	if (!code) {
+		return nil;
+	}
+	
+	NSString *lastModified = [[self dateFormatter] stringFromDate:[NSDate date]];
+	__block NSNumber *newQuantity = nil;
+	
+	[self.databaseQueue inDatabase:^(FMDatabase *db) {
+		FMResultSet *rs = [db executeQuery:[NSString stringWithFormat:@"SELECT quantity FROM %@ WHERE code = ?", table], code];
+		if ([rs next]) {
+			// A current record exists
+			double quantity = [rs doubleForColumn:@"quantity"];
+			newQuantity = [NSNumber numberWithDouble:quantity + 1];
+			[db executeUpdate:[NSString stringWithFormat:@"UPDATE %@ SET quantity = ?, last_modified = ? WHERE code = ?", table], newQuantity, lastModified, code];
+		} else {
+			newQuantity = [NSNumber numberWithInt:1];
+			// No record exists, make a new one
+			[db executeUpdate:[NSString stringWithFormat:@"INSERT INTO %@ (code, quantity, last_modified) VALUES (?, ?, ?)", table], code, newQuantity, lastModified];
+		}
+		[rs close];
+	}];
+	
+	return newQuantity;
+}
+
+- (BOOL)setQuantity:(NSNumber *)quantity forTable:(NSString *)table andBarcode:(NSString *)barcode {
+	NSString *code = [self productCodeForBarcode:barcode];
+	if (!code) {
+		return NO;
+	}
+	
+	if ([quantity isEqualToNumber:[NSNumber numberWithInt:0]]) {
+		[self deleteStocktakeRecordForProduct:code];
+		return YES;
+	}
+	
+	NSString *lastModified = [[self dateFormatter] stringFromDate:[NSDate date]];
+	
+	[self.databaseQueue inDatabase:^(FMDatabase *db) {
+		int numRecords = [db intForQuery:[NSString stringWithFormat:@"SELECT COUNT(*) FROM %@ WHERE code = ?", table], code];
+		if (numRecords) {
+			[db executeUpdate:[NSString stringWithFormat:@"UPDATE %@ SET quantity = ?, last_modified = ? WHERE code = ?", table], quantity, lastModified, code];
+		} else {
+			[db executeUpdate:[NSString stringWithFormat:@"INSERT INTO %@ (code, quantity, last_modified) VALUES (?, ?, ?)", table], code, quantity, lastModified];
+		}
+	}];
+	
+	return YES;
+}
+
+- (void)deleteRecordForTable:(NSString *)table andProductCode:(NSString *)productCode {
+	[self.databaseQueue inDatabase:^(FMDatabase *db) {
+		[db executeUpdate:[NSString stringWithFormat:@"DELETE FROM %@ WHERE code = ?", StocktakeQuantitiesTable], productCode];
+	}];
 }
 
 @end

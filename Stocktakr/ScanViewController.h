@@ -8,7 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+
+@protocol ProductDataSource;
+
 @interface ScanViewController : UIViewController <UITextFieldDelegate>
+
+@property (nonatomic, weak) id<ProductDataSource> dataSource;
 
 @property (nonatomic, strong) IBOutlet UITextField *barcodeField;
 @property (nonatomic, strong) IBOutlet UITextField *quantityField;

@@ -6,20 +6,21 @@
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
-#import "RecordsViewController.h"
+#import "ProductsViewController.h"
 #import "QuantityViewController.h"
-#import "ProductManager.h"
 #import "RecordCell.h"
+#import	"ProductDataSource.h"
 
 
-@interface RecordsViewController ()
+@interface ProductsViewController ()
 
 @property (nonatomic, strong) NSArray *records;
 
 @end
 
-@implementation RecordsViewController
+@implementation ProductsViewController
 
+@synthesize dataSource = _dataSource;
 @synthesize records = records_;
 
 
@@ -35,7 +36,7 @@
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
 	
-	self.records = [[ProductManager sharedManager] records];
+	self.records = [self.dataSource records];
 	[self.tableView reloadData];
 }
 
@@ -74,11 +75,10 @@
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
 	if (editingStyle == UITableViewCellEditingStyleDelete) {
-		ProductManager *productManager = [ProductManager sharedManager];
 		NSDictionary *record = [self.records objectAtIndex:indexPath.row];
 		
-		[productManager deleteRecordForProduct:[record valueForKey:@"code"]];
-		self.records = [productManager records];
+		[self.dataSource deleteForProduct:[record valueForKey:@"code"]];
+		self.records = [self.dataSource records];
 		[self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
 	}
 }
@@ -92,6 +92,7 @@
 	QuantityViewController *viewController = [[QuantityViewController alloc] initWithNibName:nil bundle:nil];
 	viewController.product = product;
 	viewController.initialQuantity = [product valueForKey:@"quantity"];
+	viewController.dataSource = self.dataSource;
 	[self.navigationController pushViewController:viewController animated:YES];
 }
 

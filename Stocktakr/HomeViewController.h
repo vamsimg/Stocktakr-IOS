@@ -12,6 +12,7 @@
 
 - (IBAction)priceCheck:(UIButton *)button;
 - (IBAction)performStocktake:(UIButton *)button;
+- (IBAction)purchaseOrder:(UIButton *)button;
 - (IBAction)downloadProducts:(UIButton *)button;
 
 @end

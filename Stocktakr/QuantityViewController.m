@@ -7,7 +7,7 @@
 //
 
 #import "QuantityViewController.h"
-#import "ProductManager.h"
+#import "ProductDataSource.h"
 
 
 @interface QuantityViewController ()
@@ -20,11 +20,12 @@
 
 @implementation QuantityViewController
 
-@synthesize product = product_;
-@synthesize initialQuantity = initialQuantity_;
-@synthesize descriptionLabel = nameLabel_;
-@synthesize quantityField = quantityField_;
-@synthesize keypadView = keypadView_;
+@synthesize dataSource = _dataSource;
+@synthesize product = _product;
+@synthesize initialQuantity = _initialQuantity;
+@synthesize descriptionLabel = _nameField;
+@synthesize quantityField = _quantityField;
+@synthesize keypadView = _keypadView;
 
 
 #pragma mark - UIViewController
@@ -78,11 +79,11 @@
 #pragma mark - Getters / Setters
 
 - (KeypadView *)keypadView {
-	if (!keypadView_) {
+	if (!_keypadView) {
 		self.keypadView = [[KeypadView alloc] initWithFrame:CGRectMake(0, 211, 320, 205)];
 		self.keypadView.delegate = self;
 	}
-	return keypadView_;
+	return _keypadView;
 }
 
 
@@ -92,7 +93,7 @@
 	if ([self.quantityField.text length]) {
 		NSNumber *quantity = [NSNumber numberWithDouble:[self.quantityField.text doubleValue]];
 		
-		[[ProductManager sharedManager] setQuantity:quantity forBarcode:[self.product valueForKey:@"barcode"]];
+		[self.dataSource setQuantity:quantity forBarcode:[self.product valueForKey:@"barcode"]];
 	}
 	
 	[self.navigationController popViewControllerAnimated:YES];

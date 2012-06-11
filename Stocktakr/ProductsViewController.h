@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface RecordsViewController : UITableViewController
+@protocol ProductDataSource;
+
+@interface ProductsViewController : UITableViewController
+
+@property (nonatomic, weak) id<ProductDataSource> dataSource;
 
 @end

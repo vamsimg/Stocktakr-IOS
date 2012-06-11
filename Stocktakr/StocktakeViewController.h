@@ -7,14 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ProductActionViewController.h"
 
-@interface StocktakeViewController : UIViewController
 
-@property (nonatomic, strong) IBOutlet UILabel *productCountLabel;
-@property (nonatomic, strong) IBOutlet UILabel *recordCountLabel;
+@protocol ProductDataSource;
 
-- (IBAction)scanItems:(UIButton *)button;
-- (IBAction)recordsList:(UIButton *)button;
-- (IBAction)submitRecords:(UIButton *)button;
+@interface StocktakeViewController : ProductActionViewController
 
 @end

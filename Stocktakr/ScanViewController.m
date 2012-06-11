@@ -10,6 +10,7 @@
 #import "ProductManager.h"
 #import "QuantityViewController.h"
 #import "Constants.h"
+#import "ProductDataSource.h"
 
 
 @interface ScanViewController ()
@@ -18,11 +19,12 @@
 
 @implementation ScanViewController
 
-@synthesize barcodeField = barcodeField_;
-@synthesize quantityField = quantityField_;
-@synthesize descriptionLabel = descriptionLabel_;
-@synthesize barcodeLabel = barcodeLabel_;
-@synthesize priceLabel = priceLabel_;
+@synthesize dataSource = _dataSource;
+@synthesize barcodeField = _barcodeField;
+@synthesize quantityField = _quantityField;
+@synthesize descriptionLabel = _descriptionLabel;
+@synthesize barcodeLabel = _barcodeLabel;
+@synthesize priceLabel = _priceLabel;
 
 
 #pragma mark - UIViewController
@@ -42,7 +44,7 @@
 	
 	// If there's a barcode in the label then we're returning from the quantity screen so we want to update the quantity to make sure it's correct
 	if ([self.barcodeLabel.text length]) {
-		self.quantityField.text = [[[ProductManager sharedManager] quantityForBarcode:self.barcodeLabel.text] stringValue];
+		self.quantityField.text = [[self.dataSource quantityForBarcode:self.barcodeLabel.text] stringValue];
 	}
 }
 
@@ -58,9 +60,7 @@
 		NSString *barcode = textField.text;
 		textField.text = @"";
 		
-		ProductManager *productManager = [ProductManager sharedManager];
-		
-		NSDictionary *product = [productManager productForBarcode:barcode];
+		NSDictionary *product = [[ProductManager sharedManager] productForBarcode:barcode];
 		if (!product) {
 			[[[UIAlertView alloc] initWithTitle:@"Invalid barcode" message:@"Unable to find a product matching barcode" delegate:nil cancelButtonTitle:@"Close" otherButtonTitles:nil] show];
 			return YES;
@@ -73,24 +73,25 @@
 		if ([[NSUserDefaults standardUserDefaults] boolForKey:SET_QUANTITY_KEY]) {
 			NSString *barcode = [product valueForKey:@"barcode"];
 			
-			NSNumber *quantity = [productManager quantityForBarcode:barcode];
+			NSNumber *quantity = [self.dataSource quantityForBarcode:barcode];
 			if ([quantity isEqualToNumber:[NSNumber numberWithInt:0]]) {
 				// If this is the first entry then we'll initialize the quantity to 1
-				quantity = [productManager incrementQuantityForBarcode:barcode];
+				quantity = [self.dataSource incrementQuantityForBarcode:barcode];
 			}
 			self.quantityField.text = [quantity stringValue];
 			
 			QuantityViewController *viewController = [[QuantityViewController alloc] initWithNibName:nil bundle:nil];
 			viewController.product = product;
 			viewController.initialQuantity = quantity;
+			viewController.dataSource = self.dataSource;
 			[self.navigationController pushViewController:viewController animated:YES];
 		} else {
-			self.quantityField.text = [[productManager incrementQuantityForBarcode:barcode] stringValue];
+			self.quantityField.text = [[self.dataSource incrementQuantityForBarcode:barcode] stringValue];
 		}
 	} else {
 		NSNumber *quantity = [NSNumber numberWithDouble:[textField.text doubleValue]];
 		
-		[[ProductManager sharedManager] setQuantity:quantity forBarcode:self.barcodeLabel.text];
+		[self.dataSource setQuantity:quantity forBarcode:self.barcodeLabel.text];
 		
 		[textField resignFirstResponder];
 	}

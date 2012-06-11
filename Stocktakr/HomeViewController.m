@@ -13,6 +13,7 @@
 #import "SettingsViewController.h"
 #import "PriceCheckViewController.h"
 #import "StocktakeViewController.h"
+#import "PurchaseOrderViewController.h"
 
 
 @interface HomeViewController ()
@@ -46,7 +47,12 @@
 }
 
 - (IBAction)performStocktake:(UIButton *)button {
-	StocktakeViewController *viewController = [[StocktakeViewController alloc] initWithNibName:nil bundle:nil];
+	StocktakeViewController *viewController = [[StocktakeViewController alloc] init];
+	[self.navigationController pushViewController:viewController animated:YES];
+}
+
+- (IBAction)purchaseOrder:(UIButton *)button {
+	PurchaseOrderViewController *viewController = [[PurchaseOrderViewController alloc] init];
 	[self.navigationController pushViewController:viewController animated:YES];
 }
 
