@@ -299,8 +299,9 @@ static NSString *const PurchaseOrderQuantitiesTable = @"purchase_order_quantitie
 - (NSNumber *)purchaseOrderQuantityForBarcode:(NSString *)barcode {
 	return [self quantityForTable:PurchaseOrderQuantitiesTable andBarcode:barcode];
 }
+
 - (void)deletePurchaseOrderRecordForProduct:(NSString *)productCode {
-	
+	[self deleteRecordForTable:PurchaseOrderQuantitiesTable andProductCode:productCode];
 }
 
 #pragma mark - Private methods
@@ -527,7 +528,7 @@ static NSString *const PurchaseOrderQuantitiesTable = @"purchase_order_quantitie
 
 - (void)deleteRecordForTable:(NSString *)table andProductCode:(NSString *)productCode {
 	[self.databaseQueue inDatabase:^(FMDatabase *db) {
-		[db executeUpdate:[NSString stringWithFormat:@"DELETE FROM %@ WHERE code = ?", StocktakeQuantitiesTable], productCode];
+		[db executeUpdate:[NSString stringWithFormat:@"DELETE FROM %@ WHERE code = ?", table], productCode];
 	}];
 }
 
