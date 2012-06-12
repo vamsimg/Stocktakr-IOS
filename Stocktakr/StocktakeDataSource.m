@@ -8,6 +8,7 @@
 
 #import "StocktakeDataSource.h"
 #import "ProductManager.h"
+#import "Constants.h"
 
 
 @implementation StocktakeDataSource
@@ -34,6 +35,10 @@
 
 - (void)uploadWithStoreId:(NSString *)storeId password:(NSString *)password name:(NSString *)name complete:(void (^)(BOOL success))complete {
 	[[ProductManager sharedManager] uploadStocktakeRecordsWithStoreId:storeId password:password name:name complete:complete];
+}
+
+- (BOOL)shouldAutoIncrementQuantity {
+	return ![[NSUserDefaults standardUserDefaults] boolForKey:SET_QUANTITY_KEY];
 }
 
 @end

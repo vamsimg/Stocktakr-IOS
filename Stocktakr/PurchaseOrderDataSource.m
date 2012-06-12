@@ -36,4 +36,8 @@
 	[[ProductManager sharedManager] uploadPurchaseOrdersWithStoreId:storeId password:password name:name complete:complete];
 }
 
+- (BOOL)shouldAutoIncrementQuantity {
+	return NO;
+}
+
 @end

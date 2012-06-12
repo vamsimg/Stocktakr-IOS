@@ -20,5 +20,6 @@
 
 - (void)uploadWithStoreId:(NSString *)storeId password:(NSString *)password name:(NSString *)name complete:(void (^)(BOOL success))complete;
 
+- (BOOL)shouldAutoIncrementQuantity;
 
 @end

@@ -70,7 +70,9 @@
 		self.barcodeLabel.text = [product valueForKey:@"barcode"];
 		self.priceLabel.text = [product valueForKey:@"price"];
 		
-		if ([[NSUserDefaults standardUserDefaults] boolForKey:SET_QUANTITY_KEY]) {
+		if ([self.dataSource shouldAutoIncrementQuantity]) {
+			self.quantityField.text = [[self.dataSource incrementQuantityForBarcode:barcode] stringValue];
+		} else {
 			NSString *barcode = [product valueForKey:@"barcode"];
 			
 			NSNumber *quantity = [self.dataSource quantityForBarcode:barcode];
@@ -85,8 +87,6 @@
 			viewController.initialQuantity = quantity;
 			viewController.dataSource = self.dataSource;
 			[self.navigationController pushViewController:viewController animated:YES];
-		} else {
-			self.quantityField.text = [[self.dataSource incrementQuantityForBarcode:barcode] stringValue];
 		}
 	} else {
 		NSNumber *quantity = [NSNumber numberWithDouble:[textField.text doubleValue]];
