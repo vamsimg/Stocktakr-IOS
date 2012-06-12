@@ -508,7 +508,7 @@ static NSString *const PurchaseOrderQuantitiesTable = @"purchase_order_quantitie
 	}
 	
 	if ([quantity isEqualToNumber:[NSNumber numberWithInt:0]]) {
-		[self deleteStocktakeRecordForProduct:code];
+		[self deleteRecordForTable:table andProductCode:code];
 		return YES;
 	}
 	
