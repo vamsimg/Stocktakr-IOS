@@ -29,6 +29,10 @@
 	return [[ProductManager sharedManager] stocktakeRecords];
 }
 
+- (NSUInteger)numberOfRecords {
+	return [[ProductManager sharedManager] numberOfStocktakeRecords];
+}
+
 - (void)deleteForProduct:(NSString *)productCode {
 	[[ProductManager sharedManager] deleteStocktakeRecordForProduct:productCode];
 }

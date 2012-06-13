@@ -67,6 +67,11 @@
 		return;
 	}
 	
+	if ([self.dataSource numberOfRecords] == 0) {
+		[[[UIAlertView alloc] initWithTitle:@"No Records" message:@"No records to upload" delegate:nil cancelButtonTitle:@"Close" otherButtonTitles:nil] show];
+		return;
+	}
+	
 	MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
 	hud.labelText = @"Submitting";
 	[self.dataSource uploadWithStoreId:storeId password:password name:name complete:^(BOOL success) {

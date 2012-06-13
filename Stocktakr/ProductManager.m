@@ -51,6 +51,7 @@ static NSString *const PurchaseOrderQuantitiesTable = @"purchase_order_quantitie
 - (void)deleteAll;
 
 - (NSArray *)recordsForTable:(NSString *)table;
+- (NSUInteger)numberOfRecordsForTable:(NSString *)table;
 - (NSNumber *)quantityForTable:(NSString *)table andBarcode:(NSString *)barcode;
 - (NSNumber *)incrementQuantityForTable:(NSString *)table andBarcode:(NSString *)barcode;
 - (BOOL)setQuantity:(NSNumber *)quantity forTable:(NSString *)table andBarcode:(NSString *)barcode;
@@ -229,12 +230,8 @@ static NSString *const PurchaseOrderQuantitiesTable = @"purchase_order_quantitie
 
 #pragma mark - Products
 
-- (NSInteger)numberOfProducts {
-	__block NSInteger numProducts = 0;
-	[self.databaseQueue inDatabase:^(FMDatabase *db) {
-		numProducts = [db intForQuery:[NSString stringWithFormat:@"SELECT COUNT(*) FROM %@", ProductsTable]];
-	}];
-	return numProducts;
+- (NSUInteger)numberOfProducts {
+	return [self numberOfRecordsForTable:ProductsTable];
 }
 
 - (NSDictionary *)productForBarcode:(NSString *)barcode {
@@ -265,6 +262,10 @@ static NSString *const PurchaseOrderQuantitiesTable = @"purchase_order_quantitie
 	return [self recordsForTable:StocktakeQuantitiesTable];
 }
 
+- (NSUInteger)numberOfStocktakeRecords {
+	return [self numberOfRecordsForTable:StocktakeQuantitiesTable];
+}
+
 - (NSNumber *)incrementStocktakeQuantityForBarcode:(NSString *)barcode {
 	return [self incrementQuantityForTable:StocktakeQuantitiesTable andBarcode:barcode];
 }
@@ -286,6 +287,10 @@ static NSString *const PurchaseOrderQuantitiesTable = @"purchase_order_quantitie
 
 - (NSArray *)purchaseOrderRecords {
 	return [self recordsForTable:PurchaseOrderQuantitiesTable];
+}
+
+- (NSUInteger)numberOfPurchaseOrderRecords {
+	return [self numberOfRecordsForTable:PurchaseOrderQuantitiesTable];
 }
 
 - (NSNumber *)incrementPurchaseOrderQuantityForBarcode:(NSString *)barcode {
@@ -454,6 +459,15 @@ static NSString *const PurchaseOrderQuantitiesTable = @"purchase_order_quantitie
 	}];
 	return records;
 }
+
+- (NSUInteger)numberOfRecordsForTable:(NSString *)table {
+	__block NSUInteger numRecords = 0;
+	[self.databaseQueue inDatabase:^(FMDatabase *db) {
+		numRecords = [db intForQuery:[NSString stringWithFormat:@"SELECT COUNT(*) FROM %@", table]];
+	}];
+	return numRecords;
+}
+
 - (NSNumber *)quantityForTable:(NSString *)table andBarcode:(NSString *)barcode {
 	NSString *code = [self productCodeForBarcode:barcode];
 	if (!code) {

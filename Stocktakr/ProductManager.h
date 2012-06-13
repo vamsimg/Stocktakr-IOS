@@ -20,11 +20,12 @@
 - (void)uploadPurchaseOrdersWithStoreId:(NSString *)storeId password:(NSString *)password name:(NSString *)name complete:(void (^)(BOOL success))complete;
 
 #pragma mark - Products
-- (NSInteger)numberOfProducts;
+- (NSUInteger)numberOfProducts;
 - (NSDictionary *)productForBarcode:(NSString *)barcode;
 
 #pragma mark - Stocktake
 - (NSArray *)stocktakeRecords;
+- (NSUInteger)numberOfStocktakeRecords;
 - (NSNumber *)incrementStocktakeQuantityForBarcode:(NSString *)barcode;
 - (BOOL)setStocktakeQuantity:(NSNumber *)quantity forBarcode:(NSString *)barcode;
 - (NSNumber *)stocktakeQuantityForBarcode:(NSString *)barcode;
@@ -32,6 +33,7 @@
 
 #pragma mark - Purchase Order
 - (NSArray *)purchaseOrderRecords;
+- (NSUInteger)numberOfPurchaseOrderRecords;
 - (NSNumber *)incrementPurchaseOrderQuantityForBarcode:(NSString *)barcode;
 - (BOOL)setPurchaseOrderQuantity:(NSNumber *)quantity forBarcode:(NSString *)barcode;
 - (NSNumber *)purchaseOrderQuantityForBarcode:(NSString *)barcode;

@@ -28,6 +28,10 @@
 	return [[ProductManager sharedManager] purchaseOrderRecords];
 }
 
+- (NSUInteger)numberOfRecords {
+	return [[ProductManager sharedManager] numberOfPurchaseOrderRecords];
+}
+
 - (void)deleteForProduct:(NSString *)productCode {
 	[[ProductManager sharedManager] deletePurchaseOrderRecordForProduct:productCode];
 }
