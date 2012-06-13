@@ -846,17 +846,11 @@
 		B13CABC21560D74400E2E7FF /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: Vamsi Gullapalli (9U9KU9M9ZN)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Vamsi Gullapalli (9U9KU9M9ZN)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Stocktakr/Stocktakr-Prefix.pch";
 				HEADER_SEARCH_PATHS = "lib/fmdb/**";
 				INFOPLIST_FILE = "Stocktakr/Stocktakr-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "592932BC-C019-4C04-9CB6-04D893E39DFF";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "592932BC-C019-4C04-9CB6-04D893E39DFF";
-				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -864,17 +858,13 @@
 		B13CABC31560D74400E2E7FF /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: Vamsi Gullapalli (9U9KU9M9ZN)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Vamsi Gullapalli (9U9KU9M9ZN)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Stocktakr/Stocktakr-Prefix.pch";
 				HEADER_SEARCH_PATHS = "lib/fmdb/**";
 				INFOPLIST_FILE = "Stocktakr/Stocktakr-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "592932BC-C019-4C04-9CB6-04D893E39DFF";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "592932BC-C019-4C04-9CB6-04D893E39DFF";
-				TARGETED_DEVICE_FAMILY = "1,2";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
